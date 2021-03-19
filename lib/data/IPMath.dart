@@ -1,16 +1,19 @@
 class IPMath {
+  static int iPv6AddressByteCount = 128;
+  static int iPv6AddressByteBlockCount = (iPv6AddressByteCount / 16).round();
+
   static String binaryToIPv6String(String binaryString) {
     int length = binaryString.length;
     String ipString = "";
 
     int i = 0;
-    while (i < 3) {
+    while (i < IPMath.iPv6AddressByteBlockCount - 1) {
       String addPart = "";
       if (i * 16 < length - 1) {
         int pos = i * 16;
         String binaryPart = binaryString.substring(pos, pos + 16);
-        int intPart = binaryToInt(binaryPart);
-        addPart = intToHex(intPart);
+        BigInt intPart = binaryToBigInt(binaryPart);
+        addPart = bigIntToHex(intPart);
       }
       ipString += addPart.padLeft(4).replaceAll(" ", "0");
       ipString += ":";
@@ -24,9 +27,9 @@ class IPMath {
     String result = "";
 
     ipv6List.forEach((element) {
-      int value = hexToInt(element);
+      BigInt value = hexToBigInt(element);
 
-      String radixString = intToBinary(value);
+      String radixString = bigIntToBinary(value);
       result += radixString.padLeft(16).replaceAll(" ", "0");
     });
     return result;
@@ -41,23 +44,23 @@ class IPMath {
     return result.substring(0, result.length - 1);
   }
 
-  static int hexToInt(String hex) {
-    return int.parse("0x" + hex);
+  static BigInt hexToBigInt(String hex) {
+    return BigInt.parse("0x" + hex);
   }
 
-  static int binaryToInt(String binary) {
-    return int.parse(binary, radix: 2);
+  static BigInt binaryToBigInt(String binary) {
+    return BigInt.parse(binary, radix: 2);
   }
 
-  static String intToBinary(int value) {
+  static String bigIntToBinary(BigInt value) {
     return value.toRadixString(2);
   }
 
-  static String intTo48BitBinary(int value) {
-    return value.toRadixString(2).padLeft(48, "0");
+  static String bigIntToFullBitBinary(BigInt value) {
+    return value.toRadixString(2).padLeft(IPMath.iPv6AddressByteCount, "0");
   }
 
-  static String intToHex(int value) {
+  static String bigIntToHex(BigInt value) {
     return value.toRadixString(16);
   }
 }

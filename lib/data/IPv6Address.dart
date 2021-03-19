@@ -2,8 +2,8 @@ import 'package:netzwerkrechner/data/IPMath.dart';
 
 class IPv6Address {
   IPv6Address(List<String> ipv6List) {
-    if (ipv6List.length != 3) {
-      throw ("Invalid IPv6Address, should have 3 parts");
+    if (ipv6List.length != IPMath.iPv6AddressByteBlockCount - 1) {
+      throw ("Invalid IPv6Address, should have " + IPMath.iPv6AddressByteBlockCount.toString() +  " parts");
     }
     this._ipv6List = ipv6List;
   }
@@ -14,6 +14,10 @@ class IPv6Address {
     return new IPv6Address(ipStringToArray(ipString));
   }
 
+  factory IPv6Address.fromShortIPString(String ipString) {
+    return new IPv6Address(ipStringToArray(ipString + ":0:0:0:0"));
+  }
+
   factory IPv6Address.fromBinary(String binaryString) {
     String iPv6String = IPMath.binaryToIPv6String(binaryString);
     return IPv6Address.fromIPString(iPv6String);
@@ -21,7 +25,7 @@ class IPv6Address {
 
   factory IPv6Address.fromPrefix(int prefix) {
     String binaryString = "".padLeft(prefix, "1");
-    binaryString = binaryString.padRight(48, "0");
+    binaryString = binaryString.padRight(IPMath.iPv6AddressByteCount, "0");
 
     return IPv6Address.fromBinary(binaryString);
   }
@@ -58,9 +62,9 @@ class IPv6Address {
 
   factory IPv6Address.addToIp(IPv6Address iPv6Address, int addCount){
     String binaryString = iPv6Address.getBinary();
-    int oldBinaryInt = IPMath.binaryToInt(binaryString);
+    BigInt oldBinaryInt = IPMath.binaryToBigInt(binaryString);
     
-    String newBinary = IPMath.intTo48BitBinary(oldBinaryInt + addCount);
+    String newBinary = IPMath.bigIntToFullBitBinary(oldBinaryInt + BigInt.from(addCount));
     return IPv6Address.fromBinary(newBinary);
   }
 

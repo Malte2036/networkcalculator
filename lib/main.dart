@@ -3,7 +3,7 @@ import 'package:netzwerkrechner/data/IPv6Address.dart';
 import 'package:netzwerkrechner/data/NetworkMask.dart';
 
 void main() {
-  IPv6Address iPv6Address = IPv6Address.fromIPString("2001:DB8:ABCD");
+  IPv6Address iPv6Address = IPv6Address.fromShortIPString("2001:DB8:ABCD");
   NetworkMask networkMask = new NetworkMask(iPv6Address, 12);
   print(iPv6Address.getBinary().length);
 
