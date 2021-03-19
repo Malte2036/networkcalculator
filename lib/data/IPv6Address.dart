@@ -2,7 +2,7 @@ import 'package:netzwerkrechner/data/IPMath.dart';
 
 class IPv6Address {
   IPv6Address(List<String> ipv6List) {
-    if (ipv6List.length != IPMath.iPv6AddressByteBlockCount - 1) {
+    if (ipv6List.length != IPMath.iPv6AddressByteBlockCount) {
       throw ("Invalid IPv6Address, should have " + IPMath.iPv6AddressByteBlockCount.toString() +  " parts");
     }
     this._ipv6List = ipv6List;
@@ -15,7 +15,7 @@ class IPv6Address {
   }
 
   factory IPv6Address.fromShortIPString(String ipString) {
-    return new IPv6Address(ipStringToArray(ipString + ":0:0:0:0"));
+    return new IPv6Address(ipStringToArray(ipString + ":0:0:0:0:0"));
   }
 
   factory IPv6Address.fromBinary(String binaryString) {

@@ -7,7 +7,7 @@ class IPMath {
     String ipString = "";
 
     int i = 0;
-    while (i < IPMath.iPv6AddressByteBlockCount - 1) {
+    while (i < IPMath.iPv6AddressByteBlockCount) {
       String addPart = "";
       if (i * 16 < length - 1) {
         int pos = i * 16;
