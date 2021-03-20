@@ -30,7 +30,7 @@ class _CalculateNetworkMaskFormWidgetState
                 return 'Insert IPv6Address';
               }
               if (!IPMath.isValidIPv6AddressString(value)) {
-                return 'No valid IPv6Address (pattern: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx)';
+                return 'No valid IPv6Address';
               }
               return null;
             },

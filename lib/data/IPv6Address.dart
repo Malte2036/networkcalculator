@@ -16,11 +16,8 @@ class IPv6Address {
     if (!IPMath.isValidIPv6AddressString(ipString)) {
       throw ("Invalid IPv6Address");
     }
+    ipString = IPMath.expandIPv6StringToFullIPv6String(ipString);
     return new IPv6Address(IPMath.ipStringToArray(ipString));
-  }
-
-  factory IPv6Address.fromShortIPString(String ipString) {
-    return new IPv6Address.fromIPString(ipString + ":0:0:0:0:0");
   }
 
   factory IPv6Address.fromBinary(String binaryString) {

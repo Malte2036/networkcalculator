@@ -68,11 +68,17 @@ class IPMath {
     return ipString.split(":");
   }
 
+  static String expandIPv6StringToFullIPv6String(String ipString){
+    int count = ":".allMatches(ipString).length + 1;
+    while(count < iPv6AddressByteBlockCount){
+      ipString += ":0";
+      count++;
+    }
+    return ipString;
+  }
+
   static bool isValidIPv6AddressString(String iPv6AddressString){
     var ipv6List = ipStringToArray(iPv6AddressString);
-    if(ipv6List.length != IPMath.iPv6AddressByteBlockCount){
-      return false;
-    }
     if(ipv6List.any((element) => int.tryParse("0x" + element) == null)){
       return false;
     }
