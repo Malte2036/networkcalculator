@@ -79,7 +79,11 @@ class IPMath {
     return true;
   }
 
-  static bool isValidIPv6Prefix(int prefix){
-    return prefix >= 1 && prefix <= 128; 
+  static bool isValidIPv6Prefix(var prefix){
+    int? prefixInt = int.tryParse(prefix);
+    if(prefixInt == null){
+      return false;
+    }
+    return prefixInt >= 1 && prefixInt <= 128; 
   }
 }
