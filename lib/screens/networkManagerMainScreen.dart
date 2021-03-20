@@ -17,13 +17,12 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
         title: Text("Network Calculator"),
       ),
       body: Container(
-        child:
-            ListView(
-              children: [
-                CalculateNetworkMaskFormWidget(),
-                NetworkMaskInfoWidget()
-              ],
-            ),
+        child: ListView(
+          children: [
+            CalculateNetworkMaskFormWidget(),
+            NetworkMaskInfoWidget(),
+          ],
+        ),
       ),
     );
   }

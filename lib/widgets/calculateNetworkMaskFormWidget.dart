@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:networkcalculator/widgets/networkMaskInfoWidget.dart';
+import 'package:networkcalculator/data/IPMath.dart';
+import 'package:networkcalculator/data/NetworkMask.dart';
+import 'package:networkcalculator/data/NetworkMaskManager.dart';
 
 class CalculateNetworkMaskFormWidget extends StatefulWidget {
   @override
@@ -12,33 +14,76 @@ class _CalculateNetworkMaskFormWidgetState
     extends State<CalculateNetworkMaskFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
+  String _inputIPv6AddressString = "2001:0DB8:ABCD:0012:0:0:0:0";
+  int _inputPrefix = 32;
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
-        //crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Please enter some text';
+                return 'Insert IPv6Address';
+              }
+              if (!IPMath.isValidIPv6AddressString(value)) {
+                return 'No valid IPv6Address (example: 2001:0DB8:ABCD:0012:0:0:0:0)';
               }
               return null;
             },
+            initialValue: _inputIPv6AddressString,
+            onChanged: (value) => _inputIPv6AddressString = value,
+            decoration: InputDecoration(
+              hintText: 'Please enter IPv6Address',
+              labelText: 'IPv6Address:',
+            ),
+          ),
+          TextFormField(
+            keyboardType: TextInputType.number,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Insert Prefix';
+              }
+              return null;
+            },
+            initialValue: _inputPrefix.toString(),
+            onChanged: (value) => _inputPrefix = int.parse(value),
+            decoration: InputDecoration(
+              hintText: 'Please enter Prefix',
+              labelText: 'Prefix:',
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // If the form is valid, display a Snackbar.
-                if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
-              child: Text('Submit'),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Processing Data')));
+                      var networkMask = new NetworkMask(
+                          _inputIPv6AddressString, _inputPrefix);
+                      NetworkMaskManager.setNetworkMask(networkMask);
+                    }
+                  },
+                  child: Text('Submit'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    _formKey.currentState!.reset();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red, // background
+                    onPrimary: Colors.white, // foreground
+                  ),
+                  child: Text('Reset'),
+                ),
+              ],
             ),
           ),
         ],
