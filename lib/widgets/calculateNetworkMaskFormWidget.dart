@@ -14,7 +14,7 @@ class _CalculateNetworkMaskFormWidgetState
     extends State<CalculateNetworkMaskFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
-  String _inputIPv6AddressString = "2001:0DB8:ABCD:0012:0:0:0:0";
+  String _inputIPv6AddressString = "";
   int _inputPrefix = 32;
 
   @override
@@ -30,7 +30,7 @@ class _CalculateNetworkMaskFormWidgetState
                 return 'Insert IPv6Address';
               }
               if (!IPMath.isValidIPv6AddressString(value)) {
-                return 'No valid IPv6Address (example: 2001:0DB8:ABCD:0012:0:0:0:0)';
+                return 'No valid IPv6Address (pattern: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx)';
               }
               return null;
             },
@@ -64,7 +64,8 @@ class _CalculateNetworkMaskFormWidgetState
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      var networkMask = new NetworkMask(_inputIPv6AddressString, _inputPrefix);
+                      var networkMask = new NetworkMask(
+                          _inputIPv6AddressString, _inputPrefix);
                       NetworkMaskManager.networkMaskController.add(networkMask);
                     }
                   },
@@ -73,6 +74,9 @@ class _CalculateNetworkMaskFormWidgetState
                 ElevatedButton(
                   onPressed: () {
                     _formKey.currentState!.reset();
+                    var networkMask =
+                        new NetworkMask(_inputIPv6AddressString, _inputPrefix);
+                    NetworkMaskManager.networkMaskController.add(networkMask);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red, // background

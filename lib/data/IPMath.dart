@@ -71,7 +71,6 @@ class IPMath {
   static bool isValidIPv6AddressString(String iPv6AddressString){
     var ipv6List = ipStringToArray(iPv6AddressString);
     if(ipv6List.length != IPMath.iPv6AddressByteBlockCount){
-      var iPv6AddressString2 = iPv6AddressString;
       return false;
     }
     if(ipv6List.any((element) => int.tryParse("0x" + element) == null)){
