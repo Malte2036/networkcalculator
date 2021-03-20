@@ -3,9 +3,9 @@ import 'package:networkcalculator/data/IPMath.dart';
 class IPv6Address {
   IPv6Address(List<String> ipv6List) {
     if (ipv6List.length != IPMath.iPv6AddressByteBlockCount) {
-      throw ("Invalid IPv6Address, should have " +
+      throw ('Invalid IPv6Address, should have ' +
           IPMath.iPv6AddressByteBlockCount.toString() +
-          " parts");
+          ' parts');
     }
     this._ipv6List = ipv6List;
   }
@@ -14,7 +14,7 @@ class IPv6Address {
 
   factory IPv6Address.fromIPString(String ipString) {
     if (!IPMath.isValidIPv6AddressString(ipString)) {
-      throw ("Invalid IPv6Address");
+      throw ('Invalid IPv6Address');
     }
     ipString = IPMath.expandIPv6StringToFullIPv6String(ipString);
     return new IPv6Address(IPMath.ipStringToArray(ipString));
@@ -26,35 +26,35 @@ class IPv6Address {
   }
 
   factory IPv6Address.fromPrefix(int prefix) {
-    String binaryString = "".padLeft(prefix, "1");
-    binaryString = binaryString.padRight(IPMath.iPv6AddressByteCount, "0");
+    String binaryString = ''.padLeft(prefix, '1');
+    binaryString = binaryString.padRight(IPMath.iPv6AddressByteCount, '0');
 
     return IPv6Address.fromBinary(binaryString);
   }
 
   factory IPv6Address.toNetwork(IPv6Address iPv6Address, IPv6Address mask) {
-    String binaryString = "";
+    String binaryString = '';
     String binaryIPString = iPv6Address.getBinary();
     String binaryMaskString = mask.getBinary();
 
     for (int i = 0; i < binaryMaskString.length; i++) {
       if ((binaryMaskString[i] == '1') && (binaryIPString[i] == '1')) {
-        binaryString += "1";
+        binaryString += '1';
       } else {
-        binaryString += "0";
+        binaryString += '0';
       }
     }
     return IPv6Address.fromBinary(binaryString);
   }
 
   factory IPv6Address.toBroadcast(IPv6Address iPv6Address, IPv6Address mask) {
-    String binaryString = "";
+    String binaryString = '';
     String binaryIPString = iPv6Address.getBinary();
     String binaryMaskString = mask.getBinary();
 
     for (int i = 0; i < binaryMaskString.length; i++) {
       if (binaryMaskString[i] == '0') {
-        binaryString += "1";
+        binaryString += '1';
       } else {
         binaryString += binaryIPString[i];
       }

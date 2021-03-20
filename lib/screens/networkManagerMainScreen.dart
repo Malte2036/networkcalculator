@@ -14,7 +14,7 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Network Calculator"),
+        title: Text('Network Calculator'),
       ),
       body: Container(
         margin: EdgeInsets.all(10.0),

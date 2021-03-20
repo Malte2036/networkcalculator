@@ -4,19 +4,19 @@ class IPMath {
 
   static String binaryToIPv6String(String binaryString) {
     int length = binaryString.length;
-    String ipString = "";
+    String ipString = '';
 
     int i = 0;
     while (i < IPMath.iPv6AddressByteBlockCount) {
-      String addPart = "";
+      String addPart = '';
       if (i * 16 < length - 1) {
         int pos = i * 16;
         String binaryPart = binaryString.substring(pos, pos + 16);
         BigInt intPart = binaryToBigInt(binaryPart);
         addPart = bigIntToHex(intPart);
       }
-      ipString += addPart.padLeft(4).replaceAll(" ", "0");
-      ipString += ":";
+      ipString += addPart.padLeft(4).replaceAll(' ', '0');
+      ipString += ':';
       i++;
     }
     ipString = ipString.substring(0, ipString.length - 1);
@@ -24,28 +24,28 @@ class IPMath {
   }
 
   static String ipv6ListToBinary(List<String> ipv6List) {
-    String result = "";
+    String result = '';
 
     ipv6List.forEach((element) {
       BigInt value = hexToBigInt(element);
 
       String radixString = bigIntToBinary(value);
-      result += radixString.padLeft(16).replaceAll(" ", "0");
+      result += radixString.padLeft(16).replaceAll(' ', '0');
     });
     return result;
   }
 
   static String ipv6ListToString(List<String> ipv6List) {
-    String result = "";
+    String result = '';
     ipv6List.forEach((element) {
-      result += element.padLeft(4).replaceAll(" ", "0");
-      result += ":";
+      result += element.padLeft(4).replaceAll(' ', '0');
+      result += ':';
     });
     return result.substring(0, result.length - 1);
   }
 
   static BigInt hexToBigInt(String hex) {
-    return BigInt.parse("0x" + hex);
+    return BigInt.parse('0x' + hex);
   }
 
   static BigInt binaryToBigInt(String binary) {
@@ -57,7 +57,7 @@ class IPMath {
   }
 
   static String bigIntToFullBitBinary(BigInt value) {
-    return value.toRadixString(2).padLeft(IPMath.iPv6AddressByteCount, "0");
+    return value.toRadixString(2).padLeft(IPMath.iPv6AddressByteCount, '0');
   }
 
   static String bigIntToHex(BigInt value) {
@@ -65,13 +65,13 @@ class IPMath {
   }
 
   static List<String> ipStringToArray(String ipString) {
-    return ipString.split(":");
+    return ipString.split(':');
   }
 
   static String expandIPv6StringToFullIPv6String(String ipString){
-    int count = ":".allMatches(ipString).length + 1;
+    int count = ':'.allMatches(ipString).length + 1;
     while(count < iPv6AddressByteBlockCount){
-      ipString += ":0";
+      ipString += ':0';
       count++;
     }
     return ipString;
@@ -79,7 +79,7 @@ class IPMath {
 
   static bool isValidIPv6AddressString(String iPv6AddressString){
     var ipv6List = ipStringToArray(iPv6AddressString);
-    if(ipv6List.any((element) => int.tryParse("0x" + element) == null)){
+    if(ipv6List.any((element) => int.tryParse('0x' + element) == null)){
       return false;
     }
     return true;

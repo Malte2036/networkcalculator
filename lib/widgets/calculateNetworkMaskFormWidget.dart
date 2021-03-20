@@ -14,7 +14,7 @@ class _CalculateNetworkMaskFormWidgetState
     extends State<CalculateNetworkMaskFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
-  String _inputIPv6AddressString = "";
+  String _inputIPv6AddressString = '';
   int _inputPrefix = 32;
 
   @override
