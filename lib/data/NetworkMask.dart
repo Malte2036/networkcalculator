@@ -3,7 +3,7 @@ import 'package:networkcalculator/data/IPv6Address.dart';
 class NetworkMask {
 
   NetworkMask(String iPv6AddressString, int prefix) {
-    this._iPv6Address = IPv6Address.fromIPString(iPv6AddressString);
+    this._iPv6Address = IPv6Address.fromIPv6String(iPv6AddressString);
     this._prefix = prefix;
     this._maskIPv6Address = IPv6Address.fromPrefix(prefix);
     this._networkIPv6Address =

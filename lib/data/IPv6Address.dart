@@ -1,28 +1,28 @@
 import 'package:networkcalculator/data/IPMath.dart';
 
 class IPv6Address {
-  IPv6Address(List<String> ipv6List) {
-    if (ipv6List.length != IPMath.iPv6AddressByteBlockCount) {
+  IPv6Address(List<String> iPv6List) {
+    if (iPv6List.length != IPMath.iPv6AddressByteBlockCount) {
       throw ('Invalid IPv6Address, should have ' +
           IPMath.iPv6AddressByteBlockCount.toString() +
           ' parts');
     }
-    this._ipv6List = ipv6List;
+    this._iPv6List = iPv6List;
   }
 
-  late final List<String> _ipv6List;
+  late final List<String> _iPv6List;
 
-  factory IPv6Address.fromIPString(String ipString) {
-    if (!IPMath.isValidIPv6AddressString(ipString)) {
+  factory IPv6Address.fromIPv6String(String iPv6String) {
+    if (!IPMath.isValidIPv6AddressString(iPv6String)) {
       throw ('Invalid IPv6Address');
     }
-    ipString = IPMath.expandIPv6StringToFullIPv6String(ipString);
-    return new IPv6Address(IPMath.ipStringToArray(ipString));
+    iPv6String = IPMath.expandIPv6StringToFullIPv6String(iPv6String);
+    return new IPv6Address(IPMath.iPv6StringToArray(iPv6String));
   }
 
   factory IPv6Address.fromBinary(String binaryString) {
     String iPv6String = IPMath.binaryToIPv6String(binaryString);
-    return IPv6Address.fromIPString(iPv6String);
+    return IPv6Address.fromIPv6String(iPv6String);
   }
 
   factory IPv6Address.fromPrefix(int prefix) {
@@ -71,15 +71,15 @@ class IPv6Address {
     return IPv6Address.fromBinary(newBinary);
   }
 
-  List<String> getIPList() {
-    return _ipv6List;
+  List<String> getIPv6List() {
+    return _iPv6List;
   }
 
   String getIPString() {
-    return IPMath.ipv6ListToString(_ipv6List);
+    return IPMath.iPv6ListToString(_iPv6List);
   }
 
   String getBinary() {
-    return IPMath.ipv6ListToBinary(getIPList());
+    return IPMath.iPv6ListToBinary(getIPv6List());
   }
 }

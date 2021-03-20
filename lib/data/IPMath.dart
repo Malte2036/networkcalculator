@@ -4,7 +4,7 @@ class IPMath {
 
   static String binaryToIPv6String(String binaryString) {
     int length = binaryString.length;
-    String ipString = '';
+    String iPv6String = '';
 
     int i = 0;
     while (i < IPMath.iPv6AddressByteBlockCount) {
@@ -15,18 +15,18 @@ class IPMath {
         BigInt intPart = binaryToBigInt(binaryPart);
         addPart = bigIntToHex(intPart);
       }
-      ipString += addPart.padLeft(4).replaceAll(' ', '0');
-      ipString += ':';
+      iPv6String += addPart.padLeft(4).replaceAll(' ', '0');
+      iPv6String += ':';
       i++;
     }
-    ipString = ipString.substring(0, ipString.length - 1);
-    return ipString.toUpperCase();
+    iPv6String = iPv6String.substring(0, iPv6String.length - 1);
+    return iPv6String.toUpperCase();
   }
 
-  static String ipv6ListToBinary(List<String> ipv6List) {
+  static String iPv6ListToBinary(List<String> iPv6List) {
     String result = '';
 
-    ipv6List.forEach((element) {
+    iPv6List.forEach((element) {
       BigInt value = hexToBigInt(element);
 
       String radixString = bigIntToBinary(value);
@@ -35,9 +35,9 @@ class IPMath {
     return result;
   }
 
-  static String ipv6ListToString(List<String> ipv6List) {
+  static String iPv6ListToString(List<String> iPv6List) {
     String result = '';
-    ipv6List.forEach((element) {
+    iPv6List.forEach((element) {
       result += element.padLeft(4).replaceAll(' ', '0');
       result += ':';
     });
@@ -64,22 +64,22 @@ class IPMath {
     return value.toRadixString(16);
   }
 
-  static List<String> ipStringToArray(String ipString) {
-    return ipString.split(':');
+  static List<String> iPv6StringToArray(String iPv6String) {
+    return iPv6String.split(':');
   }
 
-  static String expandIPv6StringToFullIPv6String(String ipString){
-    int count = ':'.allMatches(ipString).length + 1;
+  static String expandIPv6StringToFullIPv6String(String iPv6String){
+    int count = ':'.allMatches(iPv6String).length + 1;
     while(count < iPv6AddressByteBlockCount){
-      ipString += ':0';
+      iPv6String += ':0';
       count++;
     }
-    return ipString;
+    return iPv6String;
   }
 
   static bool isValidIPv6AddressString(String iPv6AddressString){
-    var ipv6List = ipStringToArray(iPv6AddressString);
-    if(ipv6List.any((element) => int.tryParse('0x' + element) == null)){
+    var iPv6List = iPv6StringToArray(iPv6AddressString);
+    if(iPv6List.any((element) => int.tryParse('0x' + element) == null)){
       return false;
     }
     return true;
