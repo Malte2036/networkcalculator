@@ -1,4 +1,4 @@
-import 'package:netzwerkrechner/data/IPv6Address.dart';
+import 'package:networkcalculator/data/IPv6Address.dart';
 
 class NetworkMask {
   NetworkMask(String iPv6AddressString, int prefix) {

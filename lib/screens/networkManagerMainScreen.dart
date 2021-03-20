@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:netzwerkrechner/widgets/calculateNetworkMaskFormWidget.dart';
-import 'package:netzwerkrechner/widgets/networkMaskInfoWidget.dart';
+import 'package:networkcalculator/widgets/calculateNetworkMaskFormWidget.dart';
+import 'package:networkcalculator/widgets/networkMaskInfoWidget.dart';
 
 class NetworkManagerMainScreen extends StatefulWidget {
   @override
@@ -14,9 +14,17 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Netzwerk Rechner"),
+        title: Text("Network Calculator"),
       ),
-      body: NetworkMaskInfoWidget(),
+      body: Container(
+        child:
+            ListView(
+              children: [
+                CalculateNetworkMaskFormWidget(),
+                NetworkMaskInfoWidget()
+              ],
+            ),
+      ),
     );
   }
 }

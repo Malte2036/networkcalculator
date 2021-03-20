@@ -1,4 +1,4 @@
-import 'package:netzwerkrechner/data/IPMath.dart';
+import 'package:networkcalculator/data/IPMath.dart';
 
 class IPv6Address {
   IPv6Address(List<String> ipv6List) {

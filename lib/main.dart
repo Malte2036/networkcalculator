@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:netzwerkrechner/data/IPv6Address.dart';
-import 'package:netzwerkrechner/data/NetworkMask.dart';
-import 'package:netzwerkrechner/screens/networkManagerMainScreen.dart';
+import 'package:networkcalculator/screens/networkManagerMainScreen.dart';
 
 void main() {
-  /*IPv6Address iPv6Address = IPv6Address.fromIPString("2001:0DB8:ABCD:0012:0000:0000:0000:0000");
-  NetworkMask networkMask = new NetworkMask(iPv6Address, 80);
-
-  print(networkMask.printNetworkMask());*/
   runApp(MyApp());
 }
 
@@ -16,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NetzwerkRechner',
+      title: 'Network Calculator',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:netzwerkrechner/data/IPv6Address.dart';
-import 'package:netzwerkrechner/data/NetworkMask.dart';
+import 'package:networkcalculator/data/NetworkMask.dart';
 
 class NetworkMaskInfoWidget extends StatefulWidget {
   @override
@@ -13,7 +12,7 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new ListView(
+    return new Column(
       children: [
         Text("Data:"),
         Text("IP: " + networkMask.getIPv6Address().getIPString()),
