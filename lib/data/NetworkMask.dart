@@ -52,13 +52,13 @@ class NetworkMask {
 
   String printNetworkMask() {
     String toPrint = 'Mask was calculated:\n';
-    toPrint += 'IP: ' + _iPv6Address.getIPString() + '\n';
-    toPrint += 'Prefix: ' + _prefix.toString() + '\n';
-    toPrint += 'Mask: ' + _maskIPv6Address.getIPString() + '\n';
-    toPrint += 'Network: ' + _networkIPv6Address.getIPString() + '\n';
-    toPrint += 'Broadcast: ' + _broadcastIpv6Address.getIPString() + '\n';
-    toPrint += 'min Host: ' + _minHostIpv6Address.getIPString() + '\n';
-    toPrint += 'max Host: ' + _maxHostIpv6Address.getIPString() + '\n';
+    toPrint += 'IP: ${_iPv6Address.getIPString()} \n';
+    toPrint += 'Prefix: ${_prefix.toString()}\n';
+    toPrint += 'Mask: ${_maskIPv6Address.getIPString()}\n';
+    toPrint += 'Network: ${_networkIPv6Address.getIPString()}\n';
+    toPrint += 'Broadcast: ${_broadcastIpv6Address.getIPString()}\n';
+    toPrint += 'min Host: ${_minHostIpv6Address.getIPString()}\n';
+    toPrint += 'max Host: ${_maxHostIpv6Address.getIPString()}\n';
     return toPrint;
   }
 }
