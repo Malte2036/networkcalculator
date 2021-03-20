@@ -47,6 +47,9 @@ class _CalculateNetworkMaskFormWidgetState
               if (value!.isEmpty) {
                 return 'Insert Prefix';
               }
+              if(!IPMath.isValidIPv6Prefix(int.parse(value))){
+                return 'Prefix must be between 1 and 128';
+              }
               return null;
             },
             initialValue: _inputPrefix.toString(),

@@ -78,4 +78,8 @@ class IPMath {
     }
     return true;
   }
+
+  static bool isValidIPv6Prefix(int prefix){
+    return prefix >= 1 && prefix <= 128; 
+  }
 }
