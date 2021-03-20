@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:networkcalculator/data/NetworkMask.dart';
+import 'package:networkcalculator/data/NetworkMaskManager.dart';
 
 class NetworkMaskInfoWidget extends StatefulWidget {
   final _NetworkMaskInfoWidgetState currentNetworkMaskInfoWidgetState =
@@ -15,8 +17,14 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      printNetworkMask + " ",
-    );
+    return StreamBuilder(
+        stream: NetworkMaskManager.networkMaskController.stream,
+        builder: (BuildContext contex, AsyncSnapshot<NetworkMask> snapshot) {
+          if (!snapshot.hasData) {
+            return Text("No Data!");
+          }
+          NetworkMask networkMask = snapshot.data!;
+          return Text(networkMask.printNetworkMask());
+        });
   }
 }

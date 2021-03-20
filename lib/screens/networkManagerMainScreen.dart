@@ -17,6 +17,7 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
         title: Text("Network Calculator"),
       ),
       body: Container(
+        margin: EdgeInsets.all(10.0),
         child: ListView(
           children: [
             CalculateNetworkMaskFormWidget(),

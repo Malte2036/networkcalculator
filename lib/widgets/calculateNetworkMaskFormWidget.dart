@@ -64,11 +64,8 @@ class _CalculateNetworkMaskFormWidgetState
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Processing Data')));
-                      var networkMask = new NetworkMask(
-                          _inputIPv6AddressString, _inputPrefix);
-                      NetworkMaskManager.setNetworkMask(networkMask);
+                      var networkMask = new NetworkMask(_inputIPv6AddressString, _inputPrefix);
+                      NetworkMaskManager.networkMaskController.add(networkMask);
                     }
                   },
                   child: Text('Submit'),
