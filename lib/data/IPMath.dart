@@ -1,6 +1,16 @@
+import 'package:networkcalculator/data/IPv6Address.dart';
+
 class IPMath {
   static int iPv6AddressByteCount = 128;
   static int iPv6AddressByteBlockCount = (iPv6AddressByteCount / 16).round();
+
+  // Regex expression for validating IPv4
+  static RegExp iPv4ValidateRegExp = new RegExp(
+      "(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])");
+
+  // Regex expression for validating IPv6
+  static RegExp iPv6ValidateRegExp =
+      new RegExp("((([0-9a-fA-F]){1,4})\\:){7}([0-9a-fA-F]){1,4}");
 
   static String binaryToIPv6String(String binaryString) {
     int length = binaryString.length;
@@ -44,6 +54,41 @@ class IPMath {
     return result.substring(0, result.length - 1);
   }
 
+  static String iPv6BinaryToIPv4String(String binaryString) {
+    int length = binaryString.length;
+    String iPv4String = '';
+
+    int i = 12;
+    while (i < 16) {
+      String addPart = '';
+      if (i * 8 < length - 1) {
+        int pos = i * 8;
+        String binaryPart = binaryString.substring(pos, pos + 8);
+        addPart = binaryToBigInt(binaryPart).toString();
+      }
+      iPv4String += addPart;
+      iPv4String += '.';
+      i++;
+    }
+    return iPv4String.substring(0, iPv4String.length - 1);
+  }
+
+  static String iPv4StringToIPv6Binary(String iPv4String) {
+    String result = '';
+
+    List<String> iPv4List = iPv4String.split(".");
+
+    iPv4List.forEach((element) {
+      BigInt value = BigInt.parse(element);
+
+      String radixString = bigIntToBinary(value);
+      result += radixString.padLeft(8).replaceAll(' ', '0');
+    });
+    //result = result.padLeft(32).replaceAll(' ', '0');
+    //result = result.padLeft(48).replaceAll(' ', '1');
+    return result.padLeft(iPv6AddressByteCount).replaceAll(' ', '0');
+  }
+
   static BigInt hexToBigInt(String hex) {
     return BigInt.parse('0x' + hex);
   }
@@ -68,28 +113,33 @@ class IPMath {
     return iPv6String.split(':');
   }
 
-  static String expandIPv6StringToFullIPv6String(String iPv6String){
+  static IPv6Address iPv4StringToIPv6Address(String iPv4String) {
+    String iPv6Binary = IPMath.iPv4StringToIPv6Binary(iPv4String);
+    return IPv6Address.fromBinary(iPv6Binary, isIPv4Address: true);
+  }
+
+  static String expandIPv6StringToFullIPv6String(String iPv6String) {
     int count = ':'.allMatches(iPv6String).length + 1;
-    while(count < iPv6AddressByteBlockCount){
+    while (count < iPv6AddressByteBlockCount) {
       iPv6String += ':0';
       count++;
     }
     return iPv6String;
   }
 
-  static bool isValidIPv6AddressString(String iPv6AddressString){
-    var iPv6List = iPv6StringToArray(iPv6AddressString);
-    if(iPv6List.any((element) => int.tryParse('0x' + element) == null)){
-      return false;
-    }
-    return true;
+  static bool isValidIPv4AddressString(String iPv4AddressString) {
+    return iPv4ValidateRegExp.hasMatch(iPv4AddressString);
   }
 
-  static bool isValidIPv6Prefix(var prefix){
+  static bool isValidIPv6AddressString(String iPv6AddressString) {
+    return iPv6ValidateRegExp.hasMatch(iPv6AddressString);
+  }
+
+  static bool isValidIPv6Prefix(var prefix) {
     int? prefixInt = int.tryParse(prefix);
-    if(prefixInt == null){
+    if (prefixInt == null) {
       return false;
     }
-    return prefixInt >= 1 && prefixInt <= 128; 
+    return prefixInt >= 1 && prefixInt <= 128;
   }
 }

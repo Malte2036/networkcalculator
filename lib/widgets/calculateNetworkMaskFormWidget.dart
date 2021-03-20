@@ -14,7 +14,7 @@ class _CalculateNetworkMaskFormWidgetState
     extends State<CalculateNetworkMaskFormWidget> {
   final _formKey = GlobalKey<FormState>();
 
-  String _inputIPv6AddressString = '';
+  String _inputIPAddressString = '';
   int _inputPrefix = 32;
 
   @override
@@ -27,18 +27,19 @@ class _CalculateNetworkMaskFormWidgetState
           TextFormField(
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Insert IPv6Address';
+                return 'Insert IPAddress';
               }
-              if (!IPMath.isValidIPv6AddressString(value)) {
-                return 'No valid IPv6Address';
+              if (!IPMath.isValidIPv4AddressString(value) &&
+                  !IPMath.isValidIPv6AddressString(value)) {
+                return 'No valid IPAddress';
               }
               return null;
             },
-            initialValue: _inputIPv6AddressString,
-            onChanged: (value) => _inputIPv6AddressString = value,
+            initialValue: _inputIPAddressString,
+            onChanged: (value) => _inputIPAddressString = value,
             decoration: InputDecoration(
-              hintText: 'Please enter IPv6Address',
-              labelText: 'IPv6Address:',
+              hintText: 'Please enter IPv4Address or IPv6Address',
+              labelText: 'IPAddress:',
             ),
           ),
           TextFormField(
@@ -72,8 +73,8 @@ class _CalculateNetworkMaskFormWidgetState
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      var networkMask = new NetworkMask(
-                          _inputIPv6AddressString, _inputPrefix);
+                      var networkMask =
+                          new NetworkMask(_inputIPAddressString, _inputPrefix);
                       NetworkMaskManager.networkMaskController.add(networkMask);
                     }
                   },
@@ -83,7 +84,7 @@ class _CalculateNetworkMaskFormWidgetState
                   onPressed: () {
                     _formKey.currentState!.reset();
                     var networkMask =
-                        new NetworkMask(_inputIPv6AddressString, _inputPrefix);
+                        new NetworkMask(_inputIPAddressString, _inputPrefix);
                     NetworkMaskManager.networkMaskController.add(networkMask);
                   },
                   style: ElevatedButton.styleFrom(
