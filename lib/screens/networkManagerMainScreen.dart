@@ -14,12 +14,12 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Network Calculator'),
+        title: const Text('Network Calculator'),
       ),
       body: Container(
-        margin: EdgeInsets.all(10.0),
+        margin: const EdgeInsets.all(10.0),
         child: ListView(
-          children: [
+          children: <Widget>[
             CalculateNetworkMaskFormWidget(),
             NetworkMaskInfoWidget(),
           ],

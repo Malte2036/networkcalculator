@@ -16,13 +16,13 @@ class NetworkMaskInfoWidget extends StatefulWidget {
 class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<NetworkMask>(
         stream: NetworkMaskManager.networkMaskController.stream,
         builder: (BuildContext contex, AsyncSnapshot<NetworkMask> snapshot) {
           if (!snapshot.hasData) {
-            return Text('No Data!');
+            return const Text('No Data!');
           }
-          NetworkMask networkMask = snapshot.data!;
+          final NetworkMask networkMask = snapshot.data!;
           return SelectableText(networkMask.printNetworkMask());
         });
   }

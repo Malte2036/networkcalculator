@@ -5,24 +5,24 @@ class IPMath {
   static int iPv6AddressByteBlockCount = (iPv6AddressByteCount / 16).round();
 
   // Regex expression for validating IPv4
-  static RegExp iPv4ValidateRegExp = new RegExp(
-      "(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])");
+  static RegExp iPv4ValidateRegExp = RegExp(
+      '(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])');
 
   // Regex expression for validating IPv6
   static RegExp iPv6ValidateRegExp =
-      new RegExp("((([0-9a-fA-F]){1,4})\\:){7}([0-9a-fA-F]){1,4}");
+      RegExp('((([0-9a-fA-F]){1,4})\\:){7}([0-9a-fA-F]){1,4}');
 
   static String binaryToIPv6String(String binaryString) {
-    int length = binaryString.length;
+    final int length = binaryString.length;
     String iPv6String = '';
 
     int i = 0;
     while (i < IPMath.iPv6AddressByteBlockCount) {
       String addPart = '';
       if (i * 16 < length - 1) {
-        int pos = i * 16;
-        String binaryPart = binaryString.substring(pos, pos + 16);
-        BigInt intPart = binaryToBigInt(binaryPart);
+        final int pos = i * 16;
+        final String binaryPart = binaryString.substring(pos, pos + 16);
+        final BigInt intPart = binaryToBigInt(binaryPart);
         addPart = bigIntToHex(intPart);
       }
       iPv6String += addPart.padLeft(4).replaceAll(' ', '0');
@@ -36,10 +36,10 @@ class IPMath {
   static String iPv6ListToBinary(List<String> iPv6List) {
     String result = '';
 
-    iPv6List.forEach((element) {
-      BigInt value = hexToBigInt(element);
+    iPv6List.forEach((String element) {
+      final BigInt value = hexToBigInt(element);
 
-      String radixString = bigIntToBinary(value);
+      final String radixString = bigIntToBinary(value);
       result += radixString.padLeft(16).replaceAll(' ', '0');
     });
     return result;
@@ -47,7 +47,7 @@ class IPMath {
 
   static String iPv6ListToString(List<String> iPv6List) {
     String result = '';
-    iPv6List.forEach((element) {
+    iPv6List.forEach((String element) {
       result += element.padLeft(4).replaceAll(' ', '0');
       result += ':';
     });
@@ -55,15 +55,15 @@ class IPMath {
   }
 
   static String iPv6BinaryToIPv4String(String binaryString) {
-    int length = binaryString.length;
+    final int length = binaryString.length;
     String iPv4String = '';
 
     int i = 12;
     while (i < 16) {
       String addPart = '';
       if (i * 8 < length - 1) {
-        int pos = i * 8;
-        String binaryPart = binaryString.substring(pos, pos + 8);
+        final int pos = i * 8;
+        final String binaryPart = binaryString.substring(pos, pos + 8);
         addPart = binaryToBigInt(binaryPart).toString();
       }
       iPv4String += addPart;
@@ -76,12 +76,12 @@ class IPMath {
   static String iPv4StringToIPv6Binary(String iPv4String) {
     String result = '';
 
-    List<String> iPv4List = iPv4String.split(".");
+    final List<String> iPv4List = iPv4String.split('.');
 
-    iPv4List.forEach((element) {
-      BigInt value = BigInt.parse(element);
+    iPv4List.forEach((String element) {
+      final BigInt value = BigInt.parse(element);
 
-      String radixString = bigIntToBinary(value);
+      final String radixString = bigIntToBinary(value);
       result += radixString.padLeft(8).replaceAll(' ', '0');
     });
     //result = result.padLeft(32).replaceAll(' ', '0');
@@ -114,7 +114,7 @@ class IPMath {
   }
 
   static IPv6Address iPv4StringToIPv6Address(String iPv4String) {
-    String iPv6Binary = IPMath.iPv4StringToIPv6Binary(iPv4String);
+    final String iPv6Binary = IPMath.iPv4StringToIPv6Binary(iPv4String);
     return IPv6Address.fromBinary(iPv6Binary, isIPv4Address: true);
   }
 
@@ -135,11 +135,7 @@ class IPMath {
     return iPv6ValidateRegExp.hasMatch(iPv6AddressString);
   }
 
-  static bool isValidIPv6Suffix(var suffix) {
-    int? suffixInt = int.tryParse(suffix);
-    if (suffixInt == null) {
-      return false;
-    }
+  static bool isValidIPv6Suffix(int suffixInt) {
     return suffixInt >= 1 && suffixInt <= 128;
   }
 }

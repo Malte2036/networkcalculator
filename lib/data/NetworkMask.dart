@@ -5,25 +5,25 @@ class NetworkMask {
   NetworkMask(String iPString, int suffix) {
     _isIPv4Address = IPMath.isValidIPv4AddressString(iPString);
     if (_isIPv4Address) {
-      this._iPv6Address = IPMath.iPv4StringToIPv6Address(iPString);
+      _iPv6Address = IPMath.iPv4StringToIPv6Address(iPString);
     } else {
       iPString = IPMath.expandIPv6StringToFullIPv6String(iPString);
 
       if (!IPMath.isValidIPv6AddressString(iPString)) {
-        throw ("IPAddress invalid");
+        throw 'IPAddress invalid';
       }
-      this._iPv6Address = IPv6Address.fromIPv6String(iPString);
+      _iPv6Address = IPv6Address.fromIPv6String(iPString);
     }
-    this._suffix = suffix;
-    this._maskIPv6Address =
+    _suffix = suffix;
+    _maskIPv6Address =
         IPv6Address.fromSuffix(suffix, isIPv4Address: _isIPv4Address);
-    this._networkIPv6Address =
-        IPv6Address.toNetwork(this._iPv6Address, this._maskIPv6Address);
-    this._broadcastIpv6Address =
-        IPv6Address.toBroadcast(this._iPv6Address, this._maskIPv6Address);
-    this._minHostIpv6Address = IPv6Address.addToIp(this._networkIPv6Address, 1);
-    this._maxHostIpv6Address =
-        IPv6Address.addToIp(this._broadcastIpv6Address, -1);
+    _networkIPv6Address =
+        IPv6Address.toNetwork(_iPv6Address, _maskIPv6Address);
+    _broadcastIpv6Address =
+        IPv6Address.toBroadcast(_iPv6Address, _maskIPv6Address);
+    _minHostIpv6Address = IPv6Address.addToIp(_networkIPv6Address, 1);
+    _maxHostIpv6Address =
+        IPv6Address.addToIp(_broadcastIpv6Address, -1);
   }
 
   late final IPv6Address _iPv6Address;

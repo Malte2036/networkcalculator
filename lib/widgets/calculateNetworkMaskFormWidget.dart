@@ -12,7 +12,7 @@ class CalculateNetworkMaskFormWidget extends StatefulWidget {
 
 class _CalculateNetworkMaskFormWidgetState
     extends State<CalculateNetworkMaskFormWidget> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _inputIPAddressString = '';
   int _inputSuffix = 32;
@@ -25,7 +25,7 @@ class _CalculateNetworkMaskFormWidgetState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
-            validator: (value) {
+            validator: (String? value) {
               if (value!.isEmpty) {
                 return 'Insert IPAddress';
               }
@@ -37,30 +37,34 @@ class _CalculateNetworkMaskFormWidgetState
               }
               return null;
             },
-            onChanged: (value) => _inputIPAddressString = value,
-            decoration: InputDecoration(
+            onChanged: (String value) => _inputIPAddressString = value,
+            decoration: const InputDecoration(
               hintText: 'Please enter IPv4Address or IPv6Address',
               labelText: 'IPAddress:',
             ),
           ),
           TextFormField(
             keyboardType: TextInputType.number,
-            validator: (value) {
+            validator: (String? value) {
               if (value!.isEmpty) {
                 return 'Insert Suffix';
               }
-              if (!IPMath.isValidIPv6Suffix(value)) {
+              final int? suffixInt = int.tryParse(value);
+              if(suffixInt == null){
+                return 'Suffix should be an integer';
+              }
+              if (!IPMath.isValidIPv6Suffix(suffixInt)) {
                 return 'Suffix must be between 1 and 128';
               }
               return null;
             },
-            onChanged: (value) {
-              var parse = int.tryParse(value);
+            onChanged: (String value) {
+              final int? parse = int.tryParse(value);
               if (parse != null) {
                 _inputSuffix = parse;
               }
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Please enter Suffix',
               labelText: 'Suffix:',
             ),
@@ -69,29 +73,29 @@ class _CalculateNetworkMaskFormWidgetState
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      var networkMask =
-                          new NetworkMask(_inputIPAddressString, _inputSuffix);
+                      final NetworkMask networkMask =
+                          NetworkMask(_inputIPAddressString, _inputSuffix);
                       NetworkMaskManager.networkMaskController.add(networkMask);
                     }
                   },
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     _formKey.currentState!.reset();
-                    var networkMask =
-                        new NetworkMask(_inputIPAddressString, _inputSuffix);
+                    final NetworkMask networkMask =
+                        NetworkMask(_inputIPAddressString, _inputSuffix);
                     NetworkMaskManager.networkMaskController.add(networkMask);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red, // background
                     onPrimary: Colors.white, // foreground
                   ),
-                  child: Text('Reset'),
+                  child: const Text('Reset'),
                 ),
               ],
             ),
