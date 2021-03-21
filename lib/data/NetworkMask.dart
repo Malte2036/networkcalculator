@@ -17,13 +17,11 @@ class NetworkMask {
     _suffix = suffix;
     _maskIPv6Address =
         IPv6Address.fromSuffix(suffix, isIPv4Address: _isIPv4Address);
-    _networkIPv6Address =
-        IPv6Address.toNetwork(_iPv6Address, _maskIPv6Address);
+    _networkIPv6Address = IPv6Address.toNetwork(_iPv6Address, _maskIPv6Address);
     _broadcastIpv6Address =
         IPv6Address.toBroadcast(_iPv6Address, _maskIPv6Address);
     _minHostIpv6Address = IPv6Address.addToIp(_networkIPv6Address, 1);
-    _maxHostIpv6Address =
-        IPv6Address.addToIp(_broadcastIpv6Address, -1);
+    _maxHostIpv6Address = IPv6Address.addToIp(_broadcastIpv6Address, -1);
   }
 
   late final IPv6Address _iPv6Address;
@@ -78,6 +76,8 @@ class NetworkMask {
         'min Host: ${_isIPv4Address ? _minHostIpv6Address.getIPv4String() : _minHostIpv6Address.getIPv6String()}\n';
     toPrint +=
         'max Host: ${_isIPv4Address ? _maxHostIpv6Address.getIPv4String() : _maxHostIpv6Address.getIPv6String()}\n';
+    toPrint +=
+        'Count Hosts: ${IPMath.getCountHostsBySuffix(_suffix, isIPv4Address: _isIPv4Address)}';
     return toPrint;
   }
 }

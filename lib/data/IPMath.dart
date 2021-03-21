@@ -4,6 +4,8 @@ class IPMath {
   static int iPv6AddressByteCount = 128;
   static int iPv6AddressByteBlockCount = (iPv6AddressByteCount / 16).round();
 
+  static int iPv4AddressByteCount = 32;
+
   // Regex expression for validating IPv4
   static RegExp iPv4ValidateRegExp = RegExp(
       '(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])');
@@ -137,5 +139,12 @@ class IPMath {
 
   static bool isValidIPv6Suffix(int suffixInt) {
     return suffixInt >= 1 && suffixInt <= 128;
+  }
+
+  static BigInt getCountHostsBySuffix(int suffix,
+      {bool isIPv4Address = false}) {
+    final int byteCount =
+        isIPv4Address ? iPv4AddressByteCount : iPv6AddressByteCount;
+    return BigInt.from(2).pow(byteCount - suffix) - BigInt.from(2);
   }
 }
