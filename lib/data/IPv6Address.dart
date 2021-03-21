@@ -30,12 +30,12 @@ class IPv6Address {
     return IPv6Address.fromIPv6String(iPv6String, isIPv4Address: isIPv4Address);
   }
 
-  factory IPv6Address.fromPrefix(int prefix, {bool isIPv4Address: false}) {
+  factory IPv6Address.fromSuffix(int suffix, {bool isIPv4Address: false}) {
     String binaryString = '';
     if (isIPv4Address) {
-      binaryString = binaryString.padRight(prefix + 96, '1');
+      binaryString = binaryString.padRight(suffix + 96, '1');
     } else {
-      binaryString = binaryString.padRight(prefix, '1');
+      binaryString = binaryString.padRight(suffix, '1');
     }
     binaryString = binaryString.padRight(IPMath.iPv6AddressByteCount, '0');
 

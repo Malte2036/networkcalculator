@@ -2,7 +2,7 @@ import 'package:networkcalculator/data/IPMath.dart';
 import 'package:networkcalculator/data/IPv6Address.dart';
 
 class NetworkMask {
-  NetworkMask(String iPString, int prefix) {
+  NetworkMask(String iPString, int suffix) {
     _isIPv4Address = !IPMath.isValidIPv6AddressString(iPString);
     if (_isIPv4Address) {
       if (!IPMath.isValidIPv4AddressString(iPString)) {
@@ -12,9 +12,9 @@ class NetworkMask {
     } else {
       this._iPv6Address = IPv6Address.fromIPv6String(iPString);
     }
-    this._prefix = prefix;
+    this._suffix = suffix;
     this._maskIPv6Address =
-        IPv6Address.fromPrefix(prefix, isIPv4Address: _isIPv4Address);
+        IPv6Address.fromSuffix(suffix, isIPv4Address: _isIPv4Address);
     this._networkIPv6Address =
         IPv6Address.toNetwork(this._iPv6Address, this._maskIPv6Address);
     this._broadcastIpv6Address =
@@ -24,7 +24,7 @@ class NetworkMask {
   }
 
   late final IPv6Address _iPv6Address;
-  late final int _prefix;
+  late final int _suffix;
   late final IPv6Address _maskIPv6Address;
   late final IPv6Address _networkIPv6Address;
   late final IPv6Address _broadcastIpv6Address;
@@ -36,8 +36,8 @@ class NetworkMask {
     return _iPv6Address;
   }
 
-  int getPrefix() {
-    return _prefix;
+  int getSuffix() {
+    return _suffix;
   }
 
   IPv6Address getMaskIPv6Address() {
@@ -64,7 +64,7 @@ class NetworkMask {
     String toPrint = 'Mask was calculated:\n';
     toPrint +=
         'IP: ${_isIPv4Address ? _iPv6Address.getIPv4String() : _iPv6Address.getIPv6String()} \n';
-    toPrint += 'Prefix: ${_prefix.toString()}\n';
+    toPrint += 'Suffix: ${_suffix.toString()}\n';
     toPrint +=
         'Mask: ${_isIPv4Address ? _maskIPv6Address.getIPv4String() : _maskIPv6Address.getIPv6String()}\n';
     toPrint +=

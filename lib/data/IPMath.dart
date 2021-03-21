@@ -135,11 +135,11 @@ class IPMath {
     return iPv6ValidateRegExp.hasMatch(iPv6AddressString);
   }
 
-  static bool isValidIPv6Prefix(var prefix) {
-    int? prefixInt = int.tryParse(prefix);
-    if (prefixInt == null) {
+  static bool isValidIPv6Suffix(var suffix) {
+    int? suffixInt = int.tryParse(suffix);
+    if (suffixInt == null) {
       return false;
     }
-    return prefixInt >= 1 && prefixInt <= 128;
+    return suffixInt >= 1 && suffixInt <= 128;
   }
 }

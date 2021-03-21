@@ -15,7 +15,7 @@ class _CalculateNetworkMaskFormWidgetState
   final _formKey = GlobalKey<FormState>();
 
   String _inputIPAddressString = '';
-  int _inputPrefix = 32;
+  int _inputSuffix = 32;
 
   @override
   Widget build(BuildContext context) {
@@ -46,23 +46,22 @@ class _CalculateNetworkMaskFormWidgetState
             keyboardType: TextInputType.number,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Insert Prefix';
+                return 'Insert Suffix';
               }
-              if (!IPMath.isValidIPv6Prefix(value)) {
-                return 'Prefix must be between 1 and 128';
+              if (!IPMath.isValidIPv6Suffix(value)) {
+                return 'Suffix must be between 1 and 128';
               }
               return null;
             },
-            initialValue: _inputPrefix.toString(),
             onChanged: (value) {
               var parse = int.tryParse(value);
               if (parse != null) {
-                _inputPrefix = parse;
+                _inputSuffix = parse;
               }
             },
             decoration: InputDecoration(
-              hintText: 'Please enter Prefix',
-              labelText: 'Prefix:',
+              hintText: 'Please enter Suffix',
+              labelText: 'Suffix:',
             ),
           ),
           Padding(
@@ -74,7 +73,7 @@ class _CalculateNetworkMaskFormWidgetState
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       var networkMask =
-                          new NetworkMask(_inputIPAddressString, _inputPrefix);
+                          new NetworkMask(_inputIPAddressString, _inputSuffix);
                       NetworkMaskManager.networkMaskController.add(networkMask);
                     }
                   },
@@ -84,7 +83,7 @@ class _CalculateNetworkMaskFormWidgetState
                   onPressed: () {
                     _formKey.currentState!.reset();
                     var networkMask =
-                        new NetworkMask(_inputIPAddressString, _inputPrefix);
+                        new NetworkMask(_inputIPAddressString, _inputSuffix);
                     NetworkMaskManager.networkMaskController.add(networkMask);
                   },
                   style: ElevatedButton.styleFrom(
