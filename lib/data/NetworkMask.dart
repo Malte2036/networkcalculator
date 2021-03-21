@@ -3,13 +3,15 @@ import 'package:networkcalculator/data/IPv6Address.dart';
 
 class NetworkMask {
   NetworkMask(String iPString, int suffix) {
-    _isIPv4Address = !IPMath.isValidIPv6AddressString(iPString);
+    _isIPv4Address = IPMath.isValidIPv4AddressString(iPString);
     if (_isIPv4Address) {
-      if (!IPMath.isValidIPv4AddressString(iPString)) {
-        throw ("IPAddress invalid");
-      }
       this._iPv6Address = IPMath.iPv4StringToIPv6Address(iPString);
     } else {
+      iPString = IPMath.expandIPv6StringToFullIPv6String(iPString);
+
+      if (!IPMath.isValidIPv6AddressString(iPString)) {
+        throw ("IPAddress invalid");
+      }
       this._iPv6Address = IPv6Address.fromIPv6String(iPString);
     }
     this._suffix = suffix;
@@ -20,7 +22,8 @@ class NetworkMask {
     this._broadcastIpv6Address =
         IPv6Address.toBroadcast(this._iPv6Address, this._maskIPv6Address);
     this._minHostIpv6Address = IPv6Address.addToIp(this._networkIPv6Address, 1);
-    this._maxHostIpv6Address = IPv6Address.addToIp(this._broadcastIpv6Address, -1);
+    this._maxHostIpv6Address =
+        IPv6Address.addToIp(this._broadcastIpv6Address, -1);
   }
 
   late final IPv6Address _iPv6Address;

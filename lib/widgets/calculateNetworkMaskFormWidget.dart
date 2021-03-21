@@ -30,12 +30,13 @@ class _CalculateNetworkMaskFormWidgetState
                 return 'Insert IPAddress';
               }
               if (!IPMath.isValidIPv4AddressString(value) &&
-                  !IPMath.isValidIPv6AddressString(value)) {
+                  (':'.allMatches(value).length < 2 ||
+                      !IPMath.isValidIPv6AddressString(
+                          IPMath.expandIPv6StringToFullIPv6String(value)))) {
                 return 'No valid IPAddress';
               }
               return null;
             },
-            initialValue: _inputIPAddressString,
             onChanged: (value) => _inputIPAddressString = value,
             decoration: InputDecoration(
               hintText: 'Please enter IPv4Address or IPv6Address',
