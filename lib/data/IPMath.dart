@@ -2,9 +2,12 @@ import 'package:networkcalculator/data/IPv6Address.dart';
 
 class IPMath {
   static int iPv6AddressByteCount = 128;
-  static int iPv6AddressByteBlockCount = (iPv6AddressByteCount / 16).round();
+  static int iPv6AddressByteBlockSize = 16;
+  static int iPv6AddressByteBlockCount = (iPv6AddressByteCount / iPv6AddressByteBlockSize).round();
 
   static int iPv4AddressByteCount = 32;
+  static int iPv4AddressByteBlockSize = 8;
+  static int iPv4AddressByteBlockCount = (iPv6AddressByteCount / iPv4AddressByteBlockSize).round();
 
   // Regex expression for validating IPv4
   static RegExp iPv4ValidateRegExp = RegExp(
@@ -21,9 +24,9 @@ class IPMath {
     int i = 0;
     while (i < IPMath.iPv6AddressByteBlockCount) {
       String addPart = '';
-      if (i * 16 < length - 1) {
-        final int pos = i * 16;
-        final String binaryPart = binaryString.substring(pos, pos + 16);
+      if (i * iPv6AddressByteBlockSize < length - 1) {
+        final int pos = i * iPv6AddressByteBlockSize;
+        final String binaryPart = binaryString.substring(pos, pos + iPv6AddressByteBlockSize);
         final BigInt intPart = binaryToBigInt(binaryPart);
         addPart = bigIntToHex(intPart);
       }
@@ -35,6 +38,26 @@ class IPMath {
     return iPv6String.toUpperCase();
   }
 
+  static String binaryToIPv4String(String binaryString) {
+    final int length = binaryString.length;
+    String iPv4String = '';
+
+    int i = 0;
+    while (i < 4) {
+      String addPart = '';
+      if (i * iPv4AddressByteBlockSize < length - 1) {
+        final int pos = i * iPv4AddressByteBlockSize;
+        final String binaryPart = binaryString.substring(pos, pos + iPv4AddressByteBlockSize);
+        addPart = binaryToBigInt(binaryPart).toString();
+      }
+      iPv4String += addPart;
+      iPv4String += '.';
+      i++;
+    }
+    iPv4String = iPv4String.substring(0, iPv4String.length - 1);
+    return iPv4String.toUpperCase();
+  }
+
   static String iPv6ListToBinary(List<String> iPv6List) {
     String result = '';
 
@@ -42,7 +65,7 @@ class IPMath {
       final BigInt value = hexToBigInt(element);
 
       final String radixString = bigIntToBinary(value);
-      result += radixString.padLeft(16).replaceAll(' ', '0');
+      result += radixString.padLeft(iPv6AddressByteBlockSize).replaceAll(' ', '0');
     });
     return result;
   }
@@ -61,11 +84,11 @@ class IPMath {
     String iPv4String = '';
 
     int i = 12;
-    while (i < 16) {
+    while (i < iPv6AddressByteBlockSize) {
       String addPart = '';
-      if (i * 8 < length - 1) {
-        final int pos = i * 8;
-        final String binaryPart = binaryString.substring(pos, pos + 8);
+      if (i * iPv4AddressByteBlockSize < length - 1) {
+        final int pos = i * iPv4AddressByteBlockSize;
+        final String binaryPart = binaryString.substring(pos, pos + iPv4AddressByteBlockSize);
         addPart = binaryToBigInt(binaryPart).toString();
       }
       iPv4String += addPart;
@@ -84,7 +107,7 @@ class IPMath {
       final BigInt value = BigInt.parse(element);
 
       final String radixString = bigIntToBinary(value);
-      result += radixString.padLeft(8).replaceAll(' ', '0');
+      result += radixString.padLeft(iPv4AddressByteBlockSize).replaceAll(' ', '0');
     });
     //result = result.padLeft(32).replaceAll(' ', '0');
     //result = result.padLeft(48).replaceAll(' ', '1');
@@ -97,6 +120,12 @@ class IPMath {
 
   static BigInt binaryToBigInt(String binary) {
     return BigInt.parse(binary, radix: 2);
+  }
+
+  static String binaryPlusBinary(String binary1, String binary2) {
+    final BigInt iPv6Address1BigInt = binaryToBigInt(binary1);
+    final BigInt iPv6Address2BigInt = binaryToBigInt(binary2);
+    return bigIntToBinary(iPv6Address1BigInt + iPv6Address2BigInt).toString();
   }
 
   static String bigIntToBinary(BigInt value) {
@@ -145,6 +174,39 @@ class IPMath {
       {bool isIPv4Address = false}) {
     final int byteCount =
         isIPv4Address ? iPv4AddressByteCount : iPv6AddressByteCount;
-    return BigInt.from(2).pow(byteCount - suffix) - BigInt.from(2);
+    return BigInt.two.pow(byteCount - suffix) - BigInt.two;
+  }
+
+  static int getSmallestSuffixBetweenTwoIPv6Address(
+      IPv6Address iPv6AddressFirst, IPv6Address iPv6AddressSecond,
+      {bool isIPv4Address = false}) {
+    final BigInt iPv6Address1Binary =
+        binaryToBigInt(iPv6AddressFirst.getBinary());
+    final BigInt iPv6Address2Binary =
+        binaryToBigInt(iPv6AddressSecond.getBinary());
+
+    BigInt diff = iPv6Address1Binary - iPv6Address2Binary;
+    diff = diff < BigInt.zero ? -diff : diff;
+    diff += BigInt.one;
+
+    final int byteCount =
+        isIPv4Address ? iPv4AddressByteCount : iPv6AddressByteCount;
+    for (int i = byteCount; i >= 1; i--) {
+      final BigInt countHostsBySuffix =
+          getCountHostsBySuffix(i, isIPv4Address: isIPv4Address);
+      if (countHostsBySuffix >= diff) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  static IPv6Address parseIPv4OrIPv6StringToIPv6Address(String ipString) {
+    if (IPMath.isValidIPv4AddressString(ipString)) {
+      return IPMath.iPv4StringToIPv6Address(ipString);
+    } else {
+      ipString = IPMath.expandIPv6StringToFullIPv6String(ipString);
+      return IPv6Address.fromIPv6String(ipString);
+    }
   }
 }

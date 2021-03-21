@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:networkcalculator/data/NetworkMaskManager.dart';
+import 'package:networkcalculator/widgets/calculateNetworkMaskFormByTwoAddressWidget.dart';
 import 'package:networkcalculator/widgets/calculateNetworkMaskFormWidget.dart';
 import 'package:networkcalculator/widgets/networkMaskInfoWidget.dart';
 
@@ -21,7 +23,18 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
         child: ListView(
           children: <Widget>[
             CalculateNetworkMaskFormWidget(),
-            NetworkMaskInfoWidget(),
+            NetworkMaskInfoWidget(
+                NetworkMaskManager.networkMaskBySuffixController),
+            const Divider(
+              color: Colors.black,
+              height: 25,
+              thickness: 2,
+              indent: 5,
+              endIndent: 5,
+            ),
+            CalculateNetworkMaskFormByTwoAddressWidget(),
+            NetworkMaskInfoWidget(
+                NetworkMaskManager.networkMaskByTwoAddressController),
           ],
         ),
       ),

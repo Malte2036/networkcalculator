@@ -14,7 +14,7 @@ class IPv6Address {
   factory IPv6Address.fromIPv6String(String iPv6String,
       {bool isIPv4Address = false}) {
     if (!IPMath.isValidIPv6AddressString(iPv6String)) {
-      throw 'Invalid IPv6Address';
+      throw 'Invalid IPv6Address $iPv6String';
     }
     iPv6String = IPMath.expandIPv6StringToFullIPv6String(iPv6String);
     return IPv6Address(IPMath.iPv6StringToArray(iPv6String),
@@ -100,5 +100,11 @@ class IPv6Address {
 
   String getBinary() {
     return IPMath.iPv6ListToBinary(getIPv6List());
+  }
+
+  bool isGreaterThan(IPv6Address iPv6Address){
+    final BigInt binarySelf = IPMath.binaryToBigInt(getBinary());
+    final BigInt binaryExtern = IPMath.binaryToBigInt(iPv6Address.getBinary());
+    return binarySelf > binaryExtern;
   }
 }
