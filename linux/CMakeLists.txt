@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "netzwerkrechner")
-set(APPLICATION_ID "com.example.netzwerkrechner")
+set(BINARY_NAME "networkcalculator")
+set(APPLICATION_ID "com.example.networkcalculator")
 
 cmake_policy(SET CMP0063 NEW)
 
