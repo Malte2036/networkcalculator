@@ -1,16 +1,21 @@
-# networkcalculator
+# Network Calculator
 
-A new Flutter project.
+Calculate easily IPv4 and IPv6 Subnets!
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+Download executable from the [latest release](https://github.com/Malte2036/networkcalculator/releases).
 
-A few resources to get you started if this is your first Flutter project:
+### or compile it your self:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Download or clone the repository:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```console
+$ git clone https://github.com/Malte2036/networkcalculator.git
+```
+
+Build it:
+
+```console
+$ flutter build {system}
+```
