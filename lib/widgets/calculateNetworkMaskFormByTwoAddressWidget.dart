@@ -97,7 +97,7 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                             iPv6Address2 = iPv6AddressTemp;
                           }
 
-                          final int smallestSuffix =
+                          int smallestSuffix =
                               IPMath.getSmallestSuffixBetweenTwoIPv6Address(
                                   iPv6Address1, iPv6Address2,
                                   isIPv4Address: isIPv4Address);
@@ -113,31 +113,47 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                             networkMask = NetworkMask(ip, smallestSuffix,
                                 showIPOnPrint: false);
 
-                            final IPv6Address maxHostIPv6Address =
-                                networkMask.getMaxHostIPv6Address();
-                            if (iPv6Address1
-                                    .isGreaterThan(maxHostIPv6Address) ||
-                                iPv6Address2
-                                    .isGreaterThan(maxHostIPv6Address)) {
-                              final BigInt countHosts =
-                                  IPMath.getCountHostsBySuffix(smallestSuffix,
-                                      isIPv4Address: isIPv4Address);
+                            final IPv6Address minHostIPv6Address =
+                                networkMask.getMinHostIPv6Address();
 
-                              String binaryString = IPMath.binaryPlusBinary(
-                                  iPv6Address1.getBinary(),
-                                  IPMath.bigIntToBinary(countHosts));
-
-                              if (!isIPv4Address) {
-                                binaryString = binaryString
-                                    .padLeft(IPMath.iPv4AddressByteCount)
-                                    .replaceAll(' ', '0');
-                              }
-
-                              ip = isIPv4Address
-                                  ? IPMath.binaryToIPv4String(binaryString)
-                                  : IPMath.binaryToIPv6String(binaryString);
-
+                            if (minHostIPv6Address
+                                    .isGreaterThan(iPv6Address1) ||
+                                minHostIPv6Address
+                                    .isGreaterThan(iPv6Address2)) {
+                              smallestSuffix--;
+                              ip = iPv6Address1.isIPv4Address()
+                                  ? iPv6Address1.getIPv4String()
+                                  : iPv6Address1.getIPv6String();
                               success = false;
+                            } else {
+                              final IPv6Address maxHostIPv6Address =
+                                  networkMask.getMaxHostIPv6Address();
+
+                              if (iPv6Address1
+                                      .isGreaterThan(maxHostIPv6Address) ||
+                                  iPv6Address2
+                                      .isGreaterThan(maxHostIPv6Address)) {
+                                final BigInt countHosts =
+                                    IPMath.getCountHostsBySuffix(smallestSuffix,
+                                        isIPv4Address: isIPv4Address);
+
+                                String binaryString = IPMath.binaryPlusBinary(
+                                    iPv6Address1.getBinary(),
+                                    IPMath.bigIntToBinary(countHosts));
+
+                                final int byteCount = isIPv4Address
+                                    ? IPMath.iPv4AddressByteCount
+                                    : IPMath.iPv6AddressByteCount;
+                                binaryString = binaryString
+                                    .padLeft(byteCount)
+                                    .replaceAll(' ', '0');
+
+                                ip = isIPv4Address
+                                    ? IPMath.binaryToIPv4String(binaryString)
+                                    : IPMath.binaryToIPv6String(binaryString);
+
+                                success = false;
+                              }
                             }
                           } while (!success);
 
