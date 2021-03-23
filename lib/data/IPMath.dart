@@ -166,6 +166,10 @@ class IPMath {
     return iPv6ValidateRegExp.hasMatch(iPv6AddressString);
   }
 
+  static bool isValidIPv4Suffix(int suffixInt) {
+    return suffixInt >= 1 && suffixInt <= 32;
+  }
+
   static bool isValidIPv6Suffix(int suffixInt) {
     return suffixInt >= 1 && suffixInt <= 128;
   }

@@ -61,6 +61,10 @@ class _CalculateNetworkMaskFormWidgetState
                   if (suffixInt == null) {
                     return 'Suffix should be an integer';
                   }
+                  if (IPMath.isValidIPv4AddressString(_inputIPAddressString) &&
+                      !IPMath.isValidIPv4Suffix(suffixInt)) {
+                    return 'Suffix must be between 1 and 32';
+                  }
                   if (!IPMath.isValidIPv6Suffix(suffixInt)) {
                     return 'Suffix must be between 1 and 128';
                   }
@@ -96,7 +100,8 @@ class _CalculateNetworkMaskFormWidgetState
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState!.reset();
-                        NetworkMaskManager.networkMaskBySuffixController.add(null);
+                        NetworkMaskManager.networkMaskBySuffixController
+                            .add(null);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red, // background
