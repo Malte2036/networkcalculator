@@ -166,6 +166,7 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState!.reset();
+                        NetworkMaskManager.networkMaskByTwoAddressController.add(null);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red, // background

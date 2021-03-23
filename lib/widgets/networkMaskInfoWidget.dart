@@ -6,7 +6,7 @@ import 'package:networkcalculator/data/NetworkMask.dart';
 
 class NetworkMaskInfoWidget extends StatefulWidget {
   NetworkMaskInfoWidget(this.networkMaskStream);
-  final StreamController<NetworkMask> networkMaskStream;
+  final StreamController<NetworkMask?> networkMaskStream;
 
   final _NetworkMaskInfoWidgetState currentNetworkMaskInfoWidgetState =
       _NetworkMaskInfoWidgetState();
@@ -20,9 +20,9 @@ class NetworkMaskInfoWidget extends StatefulWidget {
 class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<NetworkMask>(
+    return StreamBuilder<NetworkMask?>(
         stream: widget.networkMaskStream.stream,
-        builder: (BuildContext contex, AsyncSnapshot<NetworkMask> snapshot) {
+        builder: (BuildContext contex, AsyncSnapshot<NetworkMask?> snapshot) {
           if (!snapshot.hasData) {
             return Container();
           }

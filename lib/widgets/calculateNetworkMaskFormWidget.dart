@@ -96,6 +96,7 @@ class _CalculateNetworkMaskFormWidgetState
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState!.reset();
+                        NetworkMaskManager.networkMaskBySuffixController.add(null);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red, // background
