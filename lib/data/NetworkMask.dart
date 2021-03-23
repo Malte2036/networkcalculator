@@ -64,25 +64,57 @@ class NetworkMask {
     return _maxHostIpv6Address;
   }
 
-  String printNetworkMask() {
-    String toPrint = 'Mask was calculated:\n';
-    if (_showIPOnPrint) {
-      toPrint +=
-          'IP: ${_isIPv4Address ? _iPv6Address.getIPv4String() : _iPv6Address.getIPv6String()} \n';
-    }
-    toPrint += 'Suffix: ${_suffix.toString()}\n';
-    toPrint +=
-        'Mask: ${_isIPv4Address ? _maskIPv6Address.getIPv4String() : _maskIPv6Address.getIPv6String()}\n';
-    toPrint +=
-        'Network: ${_isIPv4Address ? _networkIPv6Address.getIPv4String() : _networkIPv6Address.getIPv6String()}\n';
-    toPrint +=
-        'Broadcast: ${_isIPv4Address ? _broadcastIpv6Address.getIPv4String() : _broadcastIpv6Address.getIPv6String()}\n';
-    toPrint +=
-        'min Host: ${_isIPv4Address ? _minHostIpv6Address.getIPv4String() : _minHostIpv6Address.getIPv6String()}\n';
-    toPrint +=
-        'max Host: ${_isIPv4Address ? _maxHostIpv6Address.getIPv4String() : _maxHostIpv6Address.getIPv6String()}\n';
-    toPrint +=
-        'Count Hosts: ${IPMath.getCountHostsBySuffix(_suffix, isIPv4Address: _isIPv4Address)}';
-    return toPrint;
+  List<List<String>> printNetworkMask() {
+    return <List<String>>[
+      if (_showIPOnPrint)
+        <String>[
+          'IP:',
+          if (_isIPv4Address)
+            _iPv6Address.getIPv4String()
+          else
+            _iPv6Address.getIPv6String()
+        ],
+      <String>['Suffix:', _suffix.toString()],
+      <String>[
+        'Mask:',
+        if (_isIPv4Address)
+          _maskIPv6Address.getIPv4String()
+        else
+          _maskIPv6Address.getIPv6String()
+      ],
+      <String>[
+        'Network:',
+        if (_isIPv4Address)
+          _networkIPv6Address.getIPv4String()
+        else
+          _networkIPv6Address.getIPv6String()
+      ],
+      <String>[
+        'Broadcast:',
+        if (_isIPv4Address)
+          _broadcastIpv6Address.getIPv4String()
+        else
+          _broadcastIpv6Address.getIPv6String()
+      ],
+      <String>[
+        'min Host:',
+        if (_isIPv4Address)
+          _minHostIpv6Address.getIPv4String()
+        else
+          _minHostIpv6Address.getIPv6String()
+      ],
+      <String>[
+        'max Host:',
+        if (_isIPv4Address)
+          _maxHostIpv6Address.getIPv4String()
+        else
+          _maxHostIpv6Address.getIPv6String()
+      ],
+      <String>[
+        'count Hosts:',
+        IPMath.getCountHostsBySuffix(_suffix, isIPv4Address: _isIPv4Address)
+            .toString()
+      ]
+    ];
   }
 }
