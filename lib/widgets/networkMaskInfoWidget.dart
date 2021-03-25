@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:networkcalculator/data/NetworkMask.dart';
 
@@ -27,21 +26,11 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
 
     for (final List<String> data in printNetworkMask) {
       final List<DataCell> dataCells = <DataCell>[];
-      for (final String str in data) {
-        dataCells.add(DataCell(Text(str)));
-      }
+
+      data.forEach((element) => dataCells.add(DataCell(SelectableText(element, maxLines: 1))));
 
       final DataRow dataRow = DataRow(
         cells: dataCells,
-        onSelectChanged: (bool? value) {
-          Clipboard.setData(ClipboardData(text: data[1]));
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('"${data[1]}" copied to the clipboard'),
-              duration: const Duration(seconds: 1),
-            ),
-          );
-        },
       );
       dataRowList.add(dataRow);
     }
