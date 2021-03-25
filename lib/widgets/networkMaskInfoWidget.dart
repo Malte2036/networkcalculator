@@ -52,7 +52,7 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
             children: <Widget>[
               const Text(
                 'Mask was calculated:',
-                style: TextStyle(fontSize: 17),
+                textScaleFactor: 1.2,
               ),
               Table(
                 border: TableBorder.all(width: 0.75, color: Colors.grey),

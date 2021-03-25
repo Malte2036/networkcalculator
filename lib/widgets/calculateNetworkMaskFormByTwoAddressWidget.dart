@@ -25,7 +25,7 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
       children: <Widget>[
         const Text(
           'Calculate the subnet based on two IP addresses:',
-          style: TextStyle(fontSize: 17),
+          textScaleFactor: 1.4,
         ),
         Form(
           key: _formKey,

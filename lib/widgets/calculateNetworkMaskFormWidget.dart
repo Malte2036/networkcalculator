@@ -24,7 +24,7 @@ class _CalculateNetworkMaskFormWidgetState
       children: <Widget>[
         const Text(
           'Calculate the subnet based on an IP address and the CIDR suffix:',
-          style: TextStyle(fontSize: 17),
+          textScaleFactor: 1.4,
         ),
         Form(
           key: _formKey,
