@@ -133,13 +133,16 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                                       .isGreaterThan(broadcastIPv6Address) ||
                                   iPv6Address2
                                       .isGreaterThan(broadcastIPv6Address)) {
-                                final BigInt countHosts =
+                                BigInt countHosts =
                                     IPMath.getCountHostsBySuffix(smallestSuffix,
                                         isIPv4Address: isIPv4Address);
 
                                 String binaryString = IPMath.binaryPlusBinary(
                                     iPv6Address1.getBinary(),
-                                    IPMath.bigIntToBinary(countHosts));
+                                    IPMath.bigIntToBinary(
+                                        countHosts <= BigInt.zero
+                                            ? BigInt.one
+                                            : countHosts));
 
                                 final int byteCount = isIPv4Address
                                     ? IPMath.iPv4AddressByteCount
