@@ -21,6 +21,7 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Network Calculator'),
+          brightness: Brightness.dark,
         ),
         body: Container(
           margin: const EdgeInsets.all(10.0),
