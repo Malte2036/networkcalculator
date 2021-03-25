@@ -42,11 +42,17 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
                 children: networkMask
                     .printNetworkMask()
                     .map((List<String> data) => TableRow(
-                          children: <SelectableText>[
-                            SelectableText(data[0],
-                                maxLines: 1, textScaleFactor: 1.1),
-                            SelectableText(data[1],
-                                maxLines: 1, textScaleFactor: 1.1),
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(2.5),
+                              child: SelectableText(data[0],
+                                  maxLines: 1, textScaleFactor: 1.1),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(2.5),
+                              child: SelectableText(data[1],
+                                  maxLines: 1, textScaleFactor: 1.1),
+                            ),
                           ],
                         ))
                     .toList(),
