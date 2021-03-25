@@ -1,9 +1,7 @@
-name: lint check
+name: gh-pages and lint check
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
     
 jobs:
@@ -24,3 +22,10 @@ jobs:
         run: flutter pub get
       - name: flutter analyze
         run: flutter analyze
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+      - uses: erickzanardo/flutter-gh-pages@v3
