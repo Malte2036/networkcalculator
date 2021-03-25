@@ -133,7 +133,7 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                                       .isGreaterThan(broadcastIPv6Address) ||
                                   iPv6Address2
                                       .isGreaterThan(broadcastIPv6Address)) {
-                                BigInt countHosts =
+                                final BigInt countHosts =
                                     IPMath.getCountHostsBySuffix(smallestSuffix,
                                         isIPv4Address: isIPv4Address);
 
