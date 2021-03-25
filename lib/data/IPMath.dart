@@ -191,7 +191,7 @@ class IPMath {
 
     BigInt diff = iPv6Address1Binary - iPv6Address2Binary;
     diff = diff < BigInt.zero ? -diff : diff;
-    diff += BigInt.one;
+    diff -= BigInt.one;
 
     final int byteCount =
         isIPv4Address ? iPv4AddressByteCount : iPv6AddressByteCount;

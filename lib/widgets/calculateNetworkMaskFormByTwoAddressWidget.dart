@@ -113,12 +113,12 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                             networkMask = NetworkMask(ip, smallestSuffix,
                                 showIPOnPrint: false);
 
-                            final IPv6Address minHostIPv6Address =
-                                networkMask.getMinHostIPv6Address();
+                            final IPv6Address networkIPv6Address =
+                                networkMask.getNetworkIPv6Address();
 
-                            if (minHostIPv6Address
+                            if (networkIPv6Address
                                     .isGreaterThan(iPv6Address1) ||
-                                minHostIPv6Address
+                                networkIPv6Address
                                     .isGreaterThan(iPv6Address2)) {
                               smallestSuffix--;
                               ip = iPv6Address1.isIPv4Address()
@@ -126,13 +126,13 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                                   : iPv6Address1.getIPv6String();
                               success = false;
                             } else {
-                              final IPv6Address maxHostIPv6Address =
-                                  networkMask.getMaxHostIPv6Address();
+                              final IPv6Address broadcastIPv6Address =
+                                  networkMask.getBroadcastIPv6Address();
 
                               if (iPv6Address1
-                                      .isGreaterThan(maxHostIPv6Address) ||
+                                      .isGreaterThan(broadcastIPv6Address) ||
                                   iPv6Address2
-                                      .isGreaterThan(maxHostIPv6Address)) {
+                                      .isGreaterThan(broadcastIPv6Address)) {
                                 final BigInt countHosts =
                                     IPMath.getCountHostsBySuffix(smallestSuffix,
                                         isIPv4Address: isIPv4Address);
