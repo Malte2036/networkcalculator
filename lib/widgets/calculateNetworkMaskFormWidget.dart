@@ -47,7 +47,6 @@ class _CalculateNetworkMaskFormWidgetState
                 },
                 onChanged: (String value) => _inputIPAddressString = value,
                 decoration: const InputDecoration(
-                  hintText: 'Please enter IPv4Address or IPv6Address',
                   labelText: 'IPAddress:',
                 ),
               ),
@@ -77,7 +76,6 @@ class _CalculateNetworkMaskFormWidgetState
                   }
                 },
                 decoration: const InputDecoration(
-                  hintText: 'Please enter Suffix',
                   labelText: 'Suffix:',
                 ),
               ),

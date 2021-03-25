@@ -48,7 +48,6 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                 },
                 onChanged: (String value) => _inputIPAddress1String = value,
                 decoration: const InputDecoration(
-                  hintText: 'Please enter IPv4Address or IPv6Address',
                   labelText: 'IPAddress 1:',
                 ),
               ),
@@ -68,7 +67,6 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                 },
                 onChanged: (String value) => _inputIPAddress2String = value,
                 decoration: const InputDecoration(
-                  hintText: 'Please enter IPv4Address or IPv6Address',
                   labelText: 'IPAddress 2:',
                 ),
               ),
