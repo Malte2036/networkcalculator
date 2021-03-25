@@ -20,28 +20,29 @@ class NetworkMaskInfoWidget extends StatefulWidget {
 }
 
 class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
-  List<DataRow> getNetworkMaskDataRowList(NetworkMask networkMask) {
-    final List<DataRow> dataRowList = <DataRow>[];
+  List<TableRow> getNetworkMaskTableRowList(NetworkMask networkMask) {
+    final List<TableRow> tableRowList = <TableRow>[];
     final List<List<String>> printNetworkMask = networkMask.printNetworkMask();
 
     for (final List<String> data in printNetworkMask) {
-      final List<DataCell> dataCells = <DataCell>[];
+      final List<Widget> dataCells = <Widget>[];
 
-      data.forEach((element) => dataCells.add(DataCell(SelectableText(element, maxLines: 1))));
+      data.forEach((String element) => dataCells
+          .add(SelectableText(element, maxLines: 1, textScaleFactor: 1.1)));
 
-      final DataRow dataRow = DataRow(
-        cells: dataCells,
+      final TableRow dataRow = TableRow(
+        children: dataCells,
       );
-      dataRowList.add(dataRow);
+      tableRowList.add(dataRow);
     }
-    return dataRowList;
+    return tableRowList;
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<NetworkMask?>(
         stream: widget.networkMaskStream.stream,
-        builder: (BuildContext contex, AsyncSnapshot<NetworkMask?> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<NetworkMask?> snapshot) {
           if (!snapshot.hasData) {
             return Container();
           }
@@ -53,16 +54,10 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
                 'Mask was calculated:',
                 style: TextStyle(fontSize: 17),
               ),
-              DataTable(
-                dividerThickness: 2,
-                headingRowHeight: 0,
-                dataRowHeight: 35,
-                showCheckboxColumn: false,
-                columns: const <DataColumn>[
-                  DataColumn(label: Text('')),
-                  DataColumn(label: Text('')),
-                ],
-                rows: getNetworkMaskDataRowList(networkMask),
+              Table(
+                border: TableBorder.all(width: 0.75, color: Colors.grey),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: getNetworkMaskTableRowList(networkMask),
               ),
             ],
           );
