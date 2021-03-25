@@ -20,24 +20,6 @@ class NetworkMaskInfoWidget extends StatefulWidget {
 }
 
 class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
-  List<TableRow> getNetworkMaskTableRowList(NetworkMask networkMask) {
-    final List<TableRow> tableRowList = <TableRow>[];
-    final List<List<String>> printNetworkMask = networkMask.printNetworkMask();
-
-    for (final List<String> data in printNetworkMask) {
-      final List<Widget> dataCells = <Widget>[];
-
-      data.forEach((String element) => dataCells
-          .add(SelectableText(element, maxLines: 1, textScaleFactor: 1.1)));
-
-      final TableRow dataRow = TableRow(
-        children: dataCells,
-      );
-      tableRowList.add(dataRow);
-    }
-    return tableRowList;
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<NetworkMask?>(
@@ -57,7 +39,17 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
               Table(
                 border: TableBorder.all(width: 0.75, color: Colors.grey),
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: getNetworkMaskTableRowList(networkMask),
+                children: networkMask
+                    .printNetworkMask()
+                    .map((List<String> data) => TableRow(
+                          children: <SelectableText>[
+                            SelectableText(data[0],
+                                maxLines: 1, textScaleFactor: 1.1),
+                            SelectableText(data[1],
+                                maxLines: 1, textScaleFactor: 1.1),
+                          ],
+                        ))
+                    .toList(),
               ),
             ],
           );
