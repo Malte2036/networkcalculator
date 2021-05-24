@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:networkcalculator/data/IPMath.dart';
 import 'package:networkcalculator/data/NetworkMask.dart';
-import 'package:networkcalculator/data/NetworkMaskManager.dart';
 
 class CalculateNetworkMaskFormWidget extends StatefulWidget {
+  CalculateNetworkMaskFormWidget(this.networkMaskBySuffixSink);
+  StreamSink<NetworkMask?> networkMaskBySuffixSink;
+  
   @override
   _CalculateNetworkMaskFormWidgetState createState() =>
       _CalculateNetworkMaskFormWidgetState();
@@ -89,7 +93,7 @@ class _CalculateNetworkMaskFormWidgetState
                         if (_formKey.currentState!.validate()) {
                           final NetworkMask networkMask =
                               NetworkMask(_inputIPAddressString, _inputSuffix);
-                          NetworkMaskManager.networkMaskBySuffixController
+                          widget.networkMaskBySuffixSink
                               .add(networkMask);
                         }
                       },
@@ -98,7 +102,7 @@ class _CalculateNetworkMaskFormWidgetState
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState!.reset();
-                        NetworkMaskManager.networkMaskBySuffixController
+                        widget.networkMaskBySuffixSink
                             .add(null);
                       },
                       style: ElevatedButton.styleFrom(

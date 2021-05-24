@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:networkcalculator/data/NetworkMaskManager.dart';
+import 'package:networkcalculator/bloc/NetworkMaskBloc.dart';
 import 'package:networkcalculator/widgets/calculateNetworkMaskFormByTwoAddressWidget.dart';
 import 'package:networkcalculator/widgets/calculateNetworkMaskFormWidget.dart';
 import 'package:networkcalculator/widgets/networkMaskInfoWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NetworkManagerMainScreen extends StatefulWidget {
+
   @override
   _NetworkManagerMainScreenState createState() =>
       _NetworkManagerMainScreenState();
 }
 
 class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
+
+  NetworkMaskBloc networkMaskBloc = NetworkMaskBloc();
+
   final String _sourceCodeUrl =
       'https://github.com/Malte2036/networkcalculator';
 
@@ -27,9 +31,9 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
           margin: const EdgeInsets.all(10.0),
           child: ListView(
             children: <Widget>[
-              CalculateNetworkMaskFormWidget(),
+              CalculateNetworkMaskFormWidget(networkMaskBloc.networkMaskBySuffixSink),
               NetworkMaskInfoWidget(
-                  NetworkMaskManager.networkMaskBySuffixController),
+                  networkMaskBloc.networkMaskBySuffixStream),
               const Divider(
                 color: Colors.black,
                 height: 25,
@@ -37,9 +41,9 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
                 indent: 5,
                 endIndent: 5,
               ),
-              CalculateNetworkMaskFormByTwoAddressWidget(),
+              CalculateNetworkMaskFormByTwoAddressWidget(networkMaskBloc.networkMaskByTwoAddressSink),
               NetworkMaskInfoWidget(
-                  NetworkMaskManager.networkMaskByTwoAddressController),
+                  networkMaskBloc.networkMaskByTwoAddressStream),
             ],
           ),
         ),

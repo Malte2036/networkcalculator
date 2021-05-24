@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:networkcalculator/data/IPMath.dart';
 import 'package:networkcalculator/data/IPv6Address.dart';
 import 'package:networkcalculator/data/NetworkMask.dart';
-import 'package:networkcalculator/data/NetworkMaskManager.dart';
 
 class CalculateNetworkMaskFormByTwoAddressWidget extends StatefulWidget {
+  CalculateNetworkMaskFormByTwoAddressWidget(this.networkMaskByTwoAddressSink);
+  StreamSink<NetworkMask?> networkMaskByTwoAddressSink;
+
   @override
   _CalculateNetworkMaskFormByTwoAddressWidgetState createState() =>
       _CalculateNetworkMaskFormByTwoAddressWidgetState();
@@ -158,8 +162,7 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                             }
                           } while (!success);
 
-                          NetworkMaskManager.networkMaskByTwoAddressController
-                              .add(networkMask);
+                          widget.networkMaskByTwoAddressSink.add(networkMask);
                         }
                       },
                       child: const Text('Submit'),
@@ -167,7 +170,7 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState!.reset();
-                        NetworkMaskManager.networkMaskByTwoAddressController
+                          widget.networkMaskByTwoAddressSink
                             .add(null);
                       },
                       style: ElevatedButton.styleFrom(
