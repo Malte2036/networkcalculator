@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:networkcalculator/data/IPMath.dart';
-import 'package:networkcalculator/data/NetworkMask.dart';
+import 'package:networkcalculator/bloc/data/IPMath.dart';
+import 'package:networkcalculator/bloc/data/NetworkMask.dart';
 
 class CalculateNetworkMaskFormWidget extends StatefulWidget {
-  CalculateNetworkMaskFormWidget(this.networkMaskBySuffixSink);
-  StreamSink<NetworkMask?> networkMaskBySuffixSink;
+  const CalculateNetworkMaskFormWidget(this.networkMaskBySuffixSink);
+  final StreamSink<NetworkMask?> networkMaskBySuffixSink;
   
   @override
   _CalculateNetworkMaskFormWidgetState createState() =>

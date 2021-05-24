@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:networkcalculator/screens/networkManagerMainScreen.dart';
+import 'package:networkcalculator/ui/screens/networkManagerMainScreen.dart';
 
 void main() {
   runApp(MyApp());

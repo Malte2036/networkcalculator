@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:networkcalculator/bloc/NetworkMaskBloc.dart';
-import 'package:networkcalculator/widgets/calculateNetworkMaskFormByTwoAddressWidget.dart';
-import 'package:networkcalculator/widgets/calculateNetworkMaskFormWidget.dart';
-import 'package:networkcalculator/widgets/networkMaskInfoWidget.dart';
+import 'package:networkcalculator/ui/widgets/calculateNetworkMaskFormByTwoAddressWidget.dart';
+import 'package:networkcalculator/ui/widgets/calculateNetworkMaskFormWidget.dart';
+import 'package:networkcalculator/ui/widgets/networkMaskInfoWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NetworkManagerMainScreen extends StatefulWidget {
@@ -14,8 +14,6 @@ class NetworkManagerMainScreen extends StatefulWidget {
 }
 
 class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
-
-  NetworkMaskBloc networkMaskBloc = NetworkMaskBloc();
 
   final String _sourceCodeUrl =
       'https://github.com/Malte2036/networkcalculator';

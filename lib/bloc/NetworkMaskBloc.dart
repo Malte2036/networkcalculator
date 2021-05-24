@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:networkcalculator/data/NetworkMask.dart';
+import 'package:networkcalculator/bloc/data/NetworkMask.dart';
 
 class NetworkMaskBloc {
   final StreamController<NetworkMask?> _networkMaskBySuffixController = StreamController<NetworkMask?>.broadcast();
@@ -12,3 +12,5 @@ class NetworkMaskBloc {
   StreamSink<NetworkMask?> get networkMaskByTwoAddressSink => _networkMaskByTwoAddressController.sink;
   Stream<NetworkMask?> get networkMaskByTwoAddressStream => _networkMaskByTwoAddressController.stream;
 }
+
+final NetworkMaskBloc networkMaskBloc = NetworkMaskBloc();

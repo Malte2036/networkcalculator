@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:networkcalculator/data/IPMath.dart';
-import 'package:networkcalculator/data/IPv6Address.dart';
-import 'package:networkcalculator/data/NetworkMask.dart';
+import 'package:networkcalculator/bloc/data/IPMath.dart';
+import 'package:networkcalculator/bloc/data/IPv6Address.dart';
+import 'package:networkcalculator/bloc/data/NetworkMask.dart';
 
 class CalculateNetworkMaskFormByTwoAddressWidget extends StatefulWidget {
-  CalculateNetworkMaskFormByTwoAddressWidget(this.networkMaskByTwoAddressSink);
-  StreamSink<NetworkMask?> networkMaskByTwoAddressSink;
+  const CalculateNetworkMaskFormByTwoAddressWidget(this.networkMaskByTwoAddressSink);
+  final StreamSink<NetworkMask?> networkMaskByTwoAddressSink;
 
   @override
   _CalculateNetworkMaskFormByTwoAddressWidgetState createState() =>

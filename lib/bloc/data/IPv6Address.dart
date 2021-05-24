@@ -1,4 +1,4 @@
-import 'package:networkcalculator/data/IPMath.dart';
+import 'package:networkcalculator/bloc/data/IPMath.dart';
 
 class IPv6Address {
   IPv6Address(List<String> iPv6List, {bool isIPv4Address = false}) {
