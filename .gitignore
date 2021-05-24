@@ -47,6 +47,5 @@ app.*.map.json
 
 android/
 ios/
-test/
 
 .vscode/
