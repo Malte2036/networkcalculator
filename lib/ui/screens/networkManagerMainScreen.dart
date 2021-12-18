@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:networkcalculator/bloc/NetworkMaskBloc.dart';
 import 'package:networkcalculator/ui/widgets/calculateNetworkMaskFormByTwoAddressWidget.dart';
 import 'package:networkcalculator/ui/widgets/calculateNetworkMaskFormWidget.dart';
@@ -23,7 +23,7 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Network Calculator'),
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         body: Container(
           margin: const EdgeInsets.all(10.0),
