@@ -6,7 +6,8 @@ import 'package:networkcalculator/bloc/data/IPv6Address.dart';
 import 'package:networkcalculator/bloc/data/NetworkMask.dart';
 
 class CalculateNetworkMaskFormByTwoAddressWidget extends StatefulWidget {
-  const CalculateNetworkMaskFormByTwoAddressWidget(this.networkMaskByTwoAddressSink);
+  const CalculateNetworkMaskFormByTwoAddressWidget(
+      this.networkMaskByTwoAddressSink);
   final StreamSink<NetworkMask?> networkMaskByTwoAddressSink;
 
   @override
@@ -30,6 +31,8 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
           'Calculate the subnet based on two IP addresses:',
           textScaleFactor: 1.4,
         ),
+        const Text(
+            'This function allows you to calculate the subnet based on two IP addresses for both IPv4 and IPv6. You need to enter the two IP addresses and the program will calculate the subnet address, broadcast address, subnet mask, number of hosts, and usable host range for both versions of IP.'),
         Form(
           key: _formKey,
           child: Column(
@@ -169,8 +172,7 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState!.reset();
-                          widget.networkMaskByTwoAddressSink
-                            .add(null);
+                        widget.networkMaskByTwoAddressSink.add(null);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red, // background

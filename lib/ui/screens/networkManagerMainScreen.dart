@@ -53,7 +53,7 @@ class _NetworkManagerMainScreenState extends State<NetworkManagerMainScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                const Text('©2021 Malte Sehmer'),
+                const Text('©2023 Malte Sehmer'),
                 TextButton(
                   style: TextButton.styleFrom(
                     primary: Colors.blueAccent,

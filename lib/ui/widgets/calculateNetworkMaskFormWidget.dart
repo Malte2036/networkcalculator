@@ -7,7 +7,7 @@ import 'package:networkcalculator/bloc/data/NetworkMask.dart';
 class CalculateNetworkMaskFormWidget extends StatefulWidget {
   const CalculateNetworkMaskFormWidget(this.networkMaskBySuffixSink);
   final StreamSink<NetworkMask?> networkMaskBySuffixSink;
-  
+
   @override
   _CalculateNetworkMaskFormWidgetState createState() =>
       _CalculateNetworkMaskFormWidgetState();
@@ -29,6 +29,8 @@ class _CalculateNetworkMaskFormWidgetState
           'Calculate the subnet based on an IP address and the CIDR suffix:',
           textScaleFactor: 1.4,
         ),
+        const Text(
+            'This function allows you to calculate the subnet based on an IP address and CIDR suffix for both IPv4 and IPv6. You need to enter the IP address and CIDR suffix, and the program will calculate the subnet address, broadcast address, subnet mask, number of hosts, and usable host range for both versions of IP.'),
         Form(
           key: _formKey,
           child: Column(
@@ -92,8 +94,7 @@ class _CalculateNetworkMaskFormWidgetState
                         if (_formKey.currentState!.validate()) {
                           final NetworkMask networkMask =
                               NetworkMask(_inputIPAddressString, _inputSuffix);
-                          widget.networkMaskBySuffixSink
-                              .add(networkMask);
+                          widget.networkMaskBySuffixSink.add(networkMask);
                         }
                       },
                       child: const Text('Submit'),
@@ -101,8 +102,7 @@ class _CalculateNetworkMaskFormWidgetState
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState!.reset();
-                        widget.networkMaskBySuffixSink
-                            .add(null);
+                        widget.networkMaskBySuffixSink.add(null);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red, // background
