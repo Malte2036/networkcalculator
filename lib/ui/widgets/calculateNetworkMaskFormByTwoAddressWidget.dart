@@ -43,6 +43,10 @@ class _CalculateNetworkMaskFormByTwoAddressWidgetState
                   if (value!.isEmpty) {
                     return 'Insert IPAddress';
                   }
+
+                  print(value);
+                  print(IPMath.expandIPv6StringToFullIPv6String(
+                                  value));
                   if (!IPMath.isValidIPv4AddressString(value) &&
                       (':'.allMatches(value).length < 2 ||
                           !IPMath.isValidIPv6AddressString(

@@ -3,11 +3,13 @@ import 'package:networkcalculator/bloc/data/IPv6Address.dart';
 class IPMath {
   static int iPv6AddressByteCount = 128;
   static int iPv6AddressByteBlockSize = 16;
-  static int iPv6AddressByteBlockCount = (iPv6AddressByteCount / iPv6AddressByteBlockSize).round();
+  static int iPv6AddressByteBlockCount =
+      (iPv6AddressByteCount / iPv6AddressByteBlockSize).round();
 
   static int iPv4AddressByteCount = 32;
   static int iPv4AddressByteBlockSize = 8;
-  static int iPv4AddressByteBlockCount = (iPv6AddressByteCount / iPv4AddressByteBlockSize).round();
+  static int iPv4AddressByteBlockCount =
+      (iPv6AddressByteCount / iPv4AddressByteBlockSize).round();
 
   // Regex expression for validating IPv4
   static RegExp iPv4ValidateRegExp = RegExp(
@@ -26,7 +28,8 @@ class IPMath {
       String addPart = '';
       if (i * iPv6AddressByteBlockSize < length - 1) {
         final int pos = i * iPv6AddressByteBlockSize;
-        final String binaryPart = binaryString.substring(pos, pos + iPv6AddressByteBlockSize);
+        final String binaryPart =
+            binaryString.substring(pos, pos + iPv6AddressByteBlockSize);
         final BigInt intPart = binaryToBigInt(binaryPart);
         addPart = bigIntToHex(intPart);
       }
@@ -47,7 +50,8 @@ class IPMath {
       String addPart = '';
       if (i * iPv4AddressByteBlockSize < length - 1) {
         final int pos = i * iPv4AddressByteBlockSize;
-        final String binaryPart = binaryString.substring(pos, pos + iPv4AddressByteBlockSize);
+        final String binaryPart =
+            binaryString.substring(pos, pos + iPv4AddressByteBlockSize);
         addPart = binaryToBigInt(binaryPart).toString();
       }
       iPv4String += addPart;
@@ -65,7 +69,8 @@ class IPMath {
       final BigInt value = hexToBigInt(element);
 
       final String radixString = bigIntToBinary(value);
-      result += radixString.padLeft(iPv6AddressByteBlockSize).replaceAll(' ', '0');
+      result +=
+          radixString.padLeft(iPv6AddressByteBlockSize).replaceAll(' ', '0');
     });
     return result;
   }
@@ -88,7 +93,8 @@ class IPMath {
       String addPart = '';
       if (i * iPv4AddressByteBlockSize < length - 1) {
         final int pos = i * iPv4AddressByteBlockSize;
-        final String binaryPart = binaryString.substring(pos, pos + iPv4AddressByteBlockSize);
+        final String binaryPart =
+            binaryString.substring(pos, pos + iPv4AddressByteBlockSize);
         addPart = binaryToBigInt(binaryPart).toString();
       }
       iPv4String += addPart;
@@ -107,7 +113,8 @@ class IPMath {
       final BigInt value = BigInt.parse(element);
 
       final String radixString = bigIntToBinary(value);
-      result += radixString.padLeft(iPv4AddressByteBlockSize).replaceAll(' ', '0');
+      result +=
+          radixString.padLeft(iPv4AddressByteBlockSize).replaceAll(' ', '0');
     });
     //result = result.padLeft(32).replaceAll(' ', '0');
     //result = result.padLeft(48).replaceAll(' ', '1');
@@ -149,13 +156,41 @@ class IPMath {
     return IPv6Address.fromBinary(iPv6Binary, isIPv4Address: true);
   }
 
-  static String expandIPv6StringToFullIPv6String(String iPv6String) {
-    int count = ':'.allMatches(iPv6String).length + 1;
-    while (count < iPv6AddressByteBlockCount) {
-      iPv6String += ':0';
-      count++;
+  static String expandIPv6StringToFullIPv6String(String ipv6String) {
+    final List<String> ipv6Blocks = ipv6String.split(':');
+    const int ipv6AddressByteBlockCount = 8;
+    const String emptyBlock = '';
+    const String zeroBlock = '0';
+    int blockCount = ipv6Blocks.length;
+
+    // If IPv6 string contains "::" abbreviation
+    if (ipv6String.contains('::')) {
+      // Compute the number of blocks needed to expand the abbreviated IPv6 string
+      final int missingBlockCount = ipv6AddressByteBlockCount - blockCount;
+      // Insert empty blocks before and/or after the "::" abbreviation
+      ipv6String =
+          ipv6String.replaceFirst('::', ':${emptyBlock * missingBlockCount}:');
+      blockCount += missingBlockCount + 1;
+      ipv6Blocks.addAll(List.filled(missingBlockCount, emptyBlock));
     }
-    return iPv6String;
+
+    // Expand each block to 4 hex digits
+    final List<String> expandedBlocks = <String>[];
+    for (final String block in ipv6Blocks) {
+      expandedBlocks.add(block.padLeft(4, '0'));
+    }
+
+    // Fill in the empty blocks with "0"
+    while (expandedBlocks.length < ipv6AddressByteBlockCount) {
+      expandedBlocks.add(zeroBlock);
+    }
+
+    // Remove trailing empty blocks
+    while (expandedBlocks.last == emptyBlock) {
+      expandedBlocks.removeLast();
+    }
+
+    return expandedBlocks.join(':');
   }
 
   static bool isValidIPv4AddressString(String iPv4AddressString) {
