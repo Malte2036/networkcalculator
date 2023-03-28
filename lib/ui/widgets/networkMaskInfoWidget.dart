@@ -34,26 +34,28 @@ class _NetworkMaskInfoWidgetState extends State<NetworkMaskInfoWidget> {
                 'Mask was calculated:',
                 textScaleFactor: 1.2,
               ),
-              Table(
-                border: TableBorder.all(width: 0.75, color: Colors.grey),
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: networkMask
-                    .printNetworkMask()
-                    .map((List<String> data) => TableRow(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(2.5),
-                              child: SelectableText(data[0],
-                                  maxLines: 1, textScaleFactor: 1.1),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(2.5),
-                              child: SelectableText(data[1],
-                                  maxLines: 1, textScaleFactor: 1.1),
-                            ),
-                          ],
-                        ))
-                    .toList(),
+              SelectionArea(
+                child: Table(
+                  border: TableBorder.all(width: 0.75, color: Colors.grey),
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: networkMask
+                      .printNetworkMask()
+                      .map((List<String> data) => TableRow(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(2.5),
+                                child: Text(data[0],
+                                    maxLines: 1, textScaleFactor: 1.1),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(2.5),
+                                child: Text(data[1],
+                                    maxLines: 1, textScaleFactor: 1.1),
+                              ),
+                            ],
+                          ))
+                      .toList(),
+                ),
               ),
             ],
           );
